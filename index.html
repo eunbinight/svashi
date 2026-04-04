@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F5F2EE" />
+  <title>스바시 — 스파르타를 바꾸는 시간</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- SVG 빈티지 필터 -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="roughen">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page">
+
+    <!-- 상단 고정 네비게이션 -->
+    <header class="site-nav">
+      <div class="site-nav__logo">
+        <span class="logo-accent">1</span>5M<span class="logo-accent">I</span>N
+      </div>
+      <span class="site-nav__sub">스파르타를 바꾸는 시간</span>
+    </header>
+
+
+
+    <!-- 2. 타임 섹션 × 4 (JS가 카드를 렌더링) -->
+    <section class="time-section" data-slot="1">
+      <div class="time-section__header">
+        <span class="time-section__date">4/28</span>
+        <span class="time-section__slot">1타임 · 12:37–12:57</span>
+      </div>
+      <div class="swiper swiper-t1">
+        <div class="swiper-wrapper" id="swiper-wrapper-1"></div>
+      </div>
+    </section>
+
+    <section class="time-section" data-slot="2">
+      <div class="time-section__header">
+        <span class="time-section__date">4/28</span>
+        <span class="time-section__slot">2타임 · 14:10–14:30</span>
+      </div>
+      <div class="swiper swiper-t2">
+        <div class="swiper-wrapper" id="swiper-wrapper-2"></div>
+      </div>
+    </section>
+
+    <section class="time-section" data-slot="3">
+      <div class="time-section__header">
+        <span class="time-section__date">4/29</span>
+        <span class="time-section__slot">3타임 · 12:37–12:57</span>
+      </div>
+      <div class="swiper swiper-t3">
+        <div class="swiper-wrapper" id="swiper-wrapper-3"></div>
+      </div>
+    </section>
+
+    <section class="time-section" data-slot="4">
+      <div class="time-section__header">
+        <span class="time-section__date">4/29</span>
+        <span class="time-section__slot">4타임 · 14:10–14:30</span>
+      </div>
+      <div class="swiper swiper-t4">
+        <div class="swiper-wrapper" id="swiper-wrapper-4"></div>
+      </div>
+    </section>
+
+    <!-- 페이지 하단 여백 (바텀시트 공간) -->
+    <div style="height: 80px;"></div>
+
+  </div><!-- /.page -->
+
+  <!-- 바텀시트 백드롭 -->
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+
+  <!-- 4. 바텀시트 -->
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="bottom-sheet__handle-bar" id="bottomSheetHandle"></div>
+    <div class="bottom-sheet__header">
+      <span class="bottom-sheet__title">나의 조향 노트</span>
+      <span class="sheet-badge" id="sheetBadge">0</span>
+    </div>
+    <div class="sheet-placeholder" id="sheetPlaceholder">
+      <span class="sheet-placeholder__text">4개의 15분, 나만의 조합으로 채워보세요.</span>
+    </div>
+    <div class="bottom-sheet__slots" id="sheetSlots">
+      <!-- JS 렌더링 -->
+    </div>
+    <div class="bottom-sheet__status" id="sheetStatus"></div>
+    <button class="btn-complete btn-complete--disabled" id="btnComplete">레시피 완성하기</button>
+  </div>
+
+  <!-- 5. 강연 상세 모달 -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <!-- JS 렌더링 -->
+    </div>
+  </div>
+
+  <!-- 6. 교체 확인 팝업 -->
+  <div class="replace-popup" id="replacePopup">
+    <!-- JS 렌더링 -->
+  </div>
+
+  <!-- 7. 최종 확인 페이지 -->
+  <div class="recipe-page" id="recipePage">
+    <!-- JS 렌더링 -->
+  </div>
+
+  <!-- 7-1. 서명 페이지 -->
+  <div class="sign-page" id="signPage">
+    <div class="sign-page__inner">
+      <h1 class="sign-page__title">Sign your recipe</h1>
+      <div class="sign-page__field">
+        <input
+          type="email"
+          id="signEmail"
+          class="sign-page__input"
+          autocomplete="email"
+          inputmode="email"
+          placeholder="이메일 주소를 입력해주세요"
+        >
+        <p class="sign-page__error" id="signError"></p>
+      </div>
+      <button class="sign-page__btn" id="btnSign">서명하기</button>
+    </div>
+  </div>
+
+  <!-- 8. 완료 페이지 -->
+  <div class="done-page" id="donePage">
+    <div class="done-page__inner">
+      <div class="done-page__icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="done-page__message">나만의 15분이 완성됐어요</div>
+      <p class="done-page__sub">신청서가 제출됐어요.<br>스바시에서 만나요.</p>
+    </div>
+  </div>
+
+  <!-- Swiper CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
