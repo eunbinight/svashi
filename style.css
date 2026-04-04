@@ -712,10 +712,10 @@ ul, ol {
 }
 
 .bottom-sheet__body {
-  flex: 1;
-  min-height: 0;
+  flex: 0 0 auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  max-height: calc(80dvh - 230px);
 }
 
 .bottom-sheet__slots {
