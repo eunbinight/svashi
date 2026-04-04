@@ -94,10 +94,12 @@
     <div class="sheet-placeholder" id="sheetPlaceholder">
       <span class="sheet-placeholder__text">4개의 15분, 나만의 조합으로 채워보세요.</span>
     </div>
-    <div class="bottom-sheet__slots" id="sheetSlots">
-      <!-- JS 렌더링 -->
+    <div class="bottom-sheet__body">
+      <div class="bottom-sheet__slots" id="sheetSlots">
+        <!-- JS 렌더링 -->
+      </div>
+      <div class="bottom-sheet__status" id="sheetStatus"></div>
     </div>
-    <div class="bottom-sheet__status" id="sheetStatus"></div>
     <button class="btn-complete btn-complete--disabled" id="btnComplete">레시피 완성하기</button>
   </div>
 
@@ -120,6 +122,9 @@
 
   <!-- 7-1. 서명 페이지 -->
   <div class="sign-page" id="signPage">
+    <button class="btn-back" id="btnBackSign" aria-label="뒤로가기">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
     <div class="sign-page__inner">
       <h1 class="sign-page__title">Sign your recipe</h1>
       <div class="sign-page__field">

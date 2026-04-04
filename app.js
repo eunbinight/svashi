@@ -270,10 +270,13 @@ function renderRecipePage() {
 
   recipePage.innerHTML = `
     <div class="recipe-page__inner">
+      <button class="btn-back" id="btnBackRecipe" aria-label="뒤로가기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
       <h1 class="recipe-page__title">나의 스바시<br>레시피</h1>
       <p class="recipe-page__subtitle">
-        아래 강연으로 신청할게요.<br>
-        가장 기대되는 강연을 시그니처로 선택해주세요.
+        나만의 조합을 마지막으로 확인해보세요.<br>
+        가장 기대되는 강연을 시그니처로 고르면, 레시피가 완성돼요.
       </p>
       <ul class="recipe-list">${recipeItems}</ul>
       <div class="signature-section">
@@ -283,9 +286,9 @@ function renderRecipePage() {
           ${signatureOptions}
         </select>
       </div>
-    </div>
-    <div class="recipe-page__footer">
-      <button class="btn-finalize" id="btnFinalize">신청서 제출하기</button>
+      <div class="recipe-page__footer">
+        <button class="btn-finalize" id="btnFinalize" ${state.signature ? '' : 'disabled'}>이 레시피로 신청하기</button>
+      </div>
     </div>`;
 
   // 이벤트 바인딩 (페이지 내부)
@@ -293,6 +296,8 @@ function renderRecipePage() {
   if (signatureSelect) {
     signatureSelect.addEventListener('change', (e) => {
       state.signature = e.target.value || null;
+      const btn = document.getElementById('btnFinalize');
+      if (btn) btn.disabled = !state.signature;
     });
   }
 }
@@ -421,52 +426,26 @@ function removeFromSlot(timeSlot) {
 
 /* ── 담기 애니메이션 ─────────────────────────────────────── */
 function flyAnimation(lectureId) {
-  // 선택된 카드 엘리먼트 찾기
-  const cardEl = document.querySelector(`.card[data-id="${lectureId}"]`);
-  const sheetEl = document.getElementById('bottomSheet');
-  if (!cardEl || !sheetEl) {
-    // 애니메이션 없이 바텀시트만 열기
-    openBottomSheet();
-    return;
+  const lec = getLectureById(lectureId);
+  openBottomSheet();
+
+  // 뱃지 바운스
+  const badge = document.getElementById('sheetBadge');
+  if (badge) {
+    badge.classList.remove('badge--bounce');
+    void badge.offsetWidth; // reflow → 애니메이션 재시작
+    badge.classList.add('badge--bounce');
+    badge.addEventListener('animationend', () => badge.classList.remove('badge--bounce'), { once: true });
   }
 
-  const cardRect = cardEl.getBoundingClientRect();
-  const sheetRect = sheetEl.getBoundingClientRect();
-
-  // 클론 생성
-  const clone = cardEl.cloneNode(true);
-  clone.style.cssText = `
-    position: fixed;
-    top: ${cardRect.top}px;
-    left: ${cardRect.left}px;
-    width: ${cardRect.width}px;
-    height: ${cardRect.height}px;
-    border-radius: 14px;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 200;
-    margin: 0;
-  `;
-
-  // CSS 변수로 목표 위치 설정
-  const flyX = sheetRect.left + sheetRect.width / 2 - (cardRect.left + cardRect.width / 2);
-  const flyY = sheetRect.top - cardRect.top;
-  clone.style.setProperty('--fly-x', `${flyX}px`);
-  clone.style.setProperty('--fly-y', `${flyY}px`);
-
-  clone.classList.add('fly-to-sheet');
-  document.body.appendChild(clone);
-
-  clone.addEventListener('animationend', () => {
-    clone.remove();
-    openBottomSheet();
-    // 슬롯 pop 애니메이션
-    const slot = document.querySelector(`.slot[data-slot="${getLectureById(lectureId)?.timeSlot}"]`);
+  // 슬롯 fade-in
+  if (lec) {
+    const slot = document.querySelector(`.slot[data-slot="${lec.timeSlot}"]`);
     if (slot) {
-      slot.classList.add('slot--pop');
-      slot.addEventListener('animationend', () => slot.classList.remove('slot--pop'), { once: true });
+      slot.classList.add('slot--new');
+      slot.addEventListener('animationend', () => slot.classList.remove('slot--new'), { once: true });
     }
-  }, { once: true });
+  }
 }
 
 /* ── 최종 확인 페이지 열기 ───────────────────────────────── */
@@ -475,6 +454,11 @@ function openRecipePage() {
   const page = document.getElementById('recipePage');
   if (page) page.classList.add('recipe-page--active');
   closeBottomSheet();
+  history.pushState({ page: 'recipe' }, '');
+}
+
+function closeRecipePage() {
+  document.getElementById('recipePage')?.classList.remove('recipe-page--active');
 }
 
 /* ── 신청서 제출 ─────────────────────────────────────────── */
@@ -486,9 +470,14 @@ function openSignPage() {
   const page = document.getElementById('signPage');
   if (!page) return;
   page.classList.add('sign-page--active');
+  history.pushState({ page: 'sign' }, '');
   setTimeout(() => {
     document.getElementById('signEmail')?.focus();
   }, 320);
+}
+
+function closeSignPage() {
+  document.getElementById('signPage')?.classList.remove('sign-page--active');
 }
 
 async function submitWithEmail(email) {
@@ -551,6 +540,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function bindEvents() {
+  // ── 브라우저/앱 뒤로가기
+  window.addEventListener('popstate', () => {
+    if (document.getElementById('signPage')?.classList.contains('sign-page--active')) {
+      closeSignPage();
+    } else if (document.getElementById('recipePage')?.classList.contains('recipe-page--active')) {
+      closeRecipePage();
+    }
+  });
+
   // ── 카드 클릭 (이벤트 위임)
   document.addEventListener('click', (e) => {
     // 바텀시트 peek 클릭 → 열기
@@ -621,6 +619,12 @@ function bindEvents() {
       if (!e.target.closest('.btn-complete--disabled')) {
         openRecipePage();
       }
+      return;
+    }
+
+    // 뒤로가기 버튼
+    if (e.target.closest('#btnBackRecipe') || e.target.closest('#btnBackSign')) {
+      history.back();
       return;
     }
 
