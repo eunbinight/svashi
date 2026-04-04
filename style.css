@@ -626,6 +626,7 @@ ul, ol {
   z-index: 90;
   transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
   padding-bottom: env(safe-area-inset-bottom);
+  min-height: 80dvh;
   max-height: 80dvh;
   overflow-y: auto;
 }
@@ -988,7 +989,9 @@ ul, ol {
   width: 100%;
   max-width: 390px;
   padding: 12px var(--page-h-pad) calc(env(safe-area-inset-bottom, 0px) + 16px);
+  background-color: var(--bg);
   background: linear-gradient(to top, var(--bg) 80%, transparent 100%);
+  z-index: 111;
 }
 
 .btn-finalize {
