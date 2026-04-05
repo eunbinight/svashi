@@ -792,10 +792,11 @@ ul, ol {
 .slot__thumb--colored[data-column="b"] { background-color: var(--col-b); }
 .slot__thumb--colored[data-column="c"] { background-color: var(--col-c); }
 
-/* 숫자 레이어 — ::before 위에 */
+/* 숫자 레이어 — ::before 위에, 독립 레이어로 승격해 첫 애니메이션 시 깜빡임 방지 */
 .slot__thumb span {
   position: relative;
   z-index: 1;
+  transform: translateZ(0);
 }
 
 /* 물드는 효과 — ::before가 원형에서 퍼지며 채워짐 */
