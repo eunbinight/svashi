@@ -159,9 +159,10 @@ function renderBottomSheet() {
     }
     const lec = getLectureById(selId);
     if (!lec) return '';
+    const col = lec.id.slice(-1); // 'a' | 'b' | 'c'
     return `
       <div class="slot" data-slot="${slot}">
-        <div class="slot__thumb">${slot}</div>
+        <div class="slot__thumb" data-column="${col}">${slot}</div>
         <div class="slot__inner">
           <span class="slot__time-label">${slotLabel}</span>
           <p class="slot__title">${lec.title}</p>
@@ -429,23 +430,16 @@ function flyAnimation(lectureId) {
   const lec = getLectureById(lectureId);
   openBottomSheet();
 
-  // 뱃지 바운스
-  const badge = document.getElementById('sheetBadge');
-  if (badge) {
-    badge.classList.remove('badge--bounce');
-    void badge.offsetWidth; // reflow → 애니메이션 재시작
-    badge.classList.add('badge--bounce');
-    badge.addEventListener('animationend', () => badge.classList.remove('badge--bounce'), { once: true });
-  }
+  if (!lec) return;
 
-  // 슬롯 fade-in
-  if (lec) {
-    const slot = document.querySelector(`.slot[data-slot="${lec.timeSlot}"]`);
-    if (slot) {
-      slot.classList.add('slot--new');
-      slot.addEventListener('animationend', () => slot.classList.remove('slot--new'), { once: true });
+  // renderBottomSheet()가 DOM을 교체한 직후라 다음 프레임에서 클래스 부착
+  requestAnimationFrame(() => {
+    const thumb = document.querySelector(`.slot[data-slot="${lec.timeSlot}"] .slot__thumb`);
+    if (thumb) {
+      thumb.classList.add('slot__thumb--fill');
+      thumb.addEventListener('animationend', () => thumb.classList.remove('slot__thumb--fill'), { once: true });
     }
-  }
+  });
 }
 
 /* ── 최종 확인 페이지 열기 ───────────────────────────────── */
