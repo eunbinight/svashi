@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
   <style>@font-face { font-family: 'Obangju'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/Obangju.woff2') format('woff2'); font-display: swap; }</style>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -135,7 +135,7 @@
           class="sign-page__input"
           autocomplete="email"
           inputmode="email"
-          placeholder="이메일 주소를 입력해주세요"
+          placeholder="your@email.com"
         >
         <p class="sign-page__error" id="signError"></p>
       </div>
@@ -146,13 +146,7 @@
   <!-- 8. 완료 페이지 -->
   <div class="done-page" id="donePage">
     <div class="done-page__inner">
-      <div class="done-page__icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="done-page__message">나만의 15분이 완성됐어요</div>
-      <p class="done-page__sub">신청서가 제출됐어요.<br>스바시에서 만나요.</p>
+      <!-- JS renderDonePage()가 주입 -->
     </div>
   </div>
 

@@ -193,25 +193,84 @@ ul, ol {
   border-radius: var(--card-radius);
   overflow: hidden;
   cursor: pointer;
-  background-color: #E8E5E1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
   transition: opacity 200ms ease, transform 200ms ease;
 }
 
-.card__thumb {
+/* 상단: 텍스트 존 */
+.card__text {
+  background: var(--bg);
+  padding: 13px 13px 11px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card__cat {
+  font-family: 'Courier Prime', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.card__hook {
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 텍스트 / 이미지 구분선 */
+.card__rule {
+  height: 1px;
+  background: rgba(28,27,24,0.09);
+  flex-shrink: 0;
+}
+
+/* 하단: 이미지 존 */
+.card__image {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.card__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: inherit;
+}
+
+/* 향 노트 — 이미지 존 하단 고정 */
+.card__notes {
+  position: absolute;
+  bottom: 9px;
+  left: 11px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: rgba(28,27,24,0.38);
+  line-height: 1;
 }
 
 /* 카드 선택 체크 아이콘 */
 .card__check {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
+  top: 11px;
+  right: 11px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background-color: var(--fg);
   display: flex;
@@ -225,8 +284,8 @@ ul, ol {
 }
 
 .card__check svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   stroke: var(--bg);
   stroke-width: 2.5;
   fill: none;
@@ -234,7 +293,7 @@ ul, ol {
 
 /* ── 카드 상태 ─────────────────────────────────────────── */
 .card--selected {
-  box-shadow: inset 0 0 0 3px var(--fg);
+  box-shadow: inset 0 0 0 2.5px var(--fg);
   opacity: 1;
 }
 
@@ -322,72 +381,99 @@ ul, ol {
 
 /* 모달 내부 레이아웃 */
 .modal__inner {
-  padding: 28px var(--page-h-pad) 24px;
+  padding: 16px var(--page-h-pad) 28px;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;
 }
 
-.modal__category {
-  display: inline-flex;
+/* 라벨 프레임 */
+.modal__frame {
+  border: 1px solid rgba(28,27,24,0.12);
+  margin-bottom: 16px;
+}
+
+/* 헤더: No. + 카테고리 */
+.modal__label-top {
+  display: flex;
   align-items: center;
-  height: 24px;
-  padding: 0 10px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(28,27,24,0.10);
 }
 
-/* 모달 카테고리 색상 */
-.modal__category--커리어    { background-color: var(--cat-career-bg);  color: var(--cat-career-fg); }
-.modal__category--번아웃회복 { background-color: var(--cat-burnout-bg); color: var(--cat-burnout-fg); }
-.modal__category--관계      { background-color: var(--cat-relation-bg); color: var(--cat-relation-fg); }
-.modal__category--성장      { background-color: var(--cat-growth-bg);  color: var(--cat-growth-fg); }
-.modal__category--일루틴    { background-color: var(--cat-routine-bg);  color: var(--cat-routine-fg); }
-.modal__category--정체성    { background-color: var(--cat-identity-bg); color: var(--cat-identity-fg); }
+.modal__no {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
 
-.modal__title {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
+.modal__cat-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* 후킹 문장 + 향 노트 */
+.modal__main {
+  padding: 16px 14px 14px;
+  border-bottom: 1px solid rgba(28,27,24,0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__hook {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.22;
   color: var(--fg);
 }
 
-.modal__scent-note {
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.65;
+.modal__notes {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+/* 소개 문장 */
+.modal__desc-area {
+  padding: 14px 14px 14px;
+  border-bottom: 1px solid rgba(28,27,24,0.10);
+}
+
+.modal__desc {
+  font-size: 14px;
+  line-height: 1.85;
   color: var(--sub);
+  white-space: pre-line;
 }
 
-.modal__divider {
-  height: 1px;
-  background-color: var(--border);
+/* 조향사 */
+.modal__perfumer-area {
+  padding: 12px 14px 14px;
 }
 
-.modal__speaker-row {
+.modal__perfumer-row {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: baseline;
+  gap: 10px;
 }
 
-.modal__speaker-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  background-color: var(--border);
+.modal__perfumer-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
   flex-shrink: 0;
-}
-
-.modal__speaker-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
 }
 
 .modal__speaker-name {
@@ -397,44 +483,11 @@ ul, ol {
 }
 
 .modal__speaker-bio {
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--sub);
-}
-
-.modal__recommend {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.modal__recommend-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
   color: var(--muted);
-}
-
-.modal__recommend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--sub);
-  line-height: 1.5;
-}
-
-.modal__recommend-item::before {
-  content: '';
-  display: block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: var(--muted);
-  flex-shrink: 0;
+  margin-top: 4px;
+  padding-left: calc(10px + 2.8em);
 }
 
 /* ── 8. 버튼 ─────────────────────────────────────────────── */
@@ -1141,16 +1194,26 @@ ul, ol {
   gap: 6px;
 }
 
+.sign-page__desc {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--sub);
+  margin-top: -12px;
+}
+
 .sign-page__input {
   width: 100%;
-  height: 52px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0 16px;
-  font-size: 15px;
-  font-family: var(--font-base, inherit);
+  height: 48px;
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  border-radius: 0;
+  padding: 8px 0;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 0.03em;
   color: var(--fg);
-  background-color: #FDFCFA;
+  background: transparent;
   outline: none;
   box-sizing: border-box;
   transition: border-color var(--duration-fast, 150ms) ease;
@@ -1172,21 +1235,41 @@ ul, ol {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 52px;
-  border-radius: 12px;
-  background-color: var(--fg);
-  color: var(--bg);
-  font-size: 15px;
+  height: 48px;
+  border-radius: 2px;
+  background-color: transparent;
+  border: 1.5px solid var(--fg);
+  color: var(--fg);
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   cursor: pointer;
   transition:
     opacity var(--duration-fast, 150ms) ease,
+    background-color var(--duration-fast, 150ms) ease,
+    color var(--duration-fast, 150ms) ease,
     transform var(--duration-fast, 150ms) var(--ease-out-smooth, ease);
+}
+
+.sign-page__btn:hover {
+  background-color: var(--fg);
+  color: var(--bg);
 }
 
 .sign-page__btn:active { transform: scale(0.98); }
 .sign-page__btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* sign-page exit 애니메이션 */
+.sign-page--exit {
+  animation: signExit 280ms ease-in forwards;
+  pointer-events: none;
+}
+@keyframes signExit {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(0) scale(1.03); }
+}
 
 /* ── 12. 완료 페이지 ───────────────────────────────────── */
 .done-page {
@@ -1195,62 +1278,279 @@ ul, ol {
   background-color: var(--bg);
   z-index: 120;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: auto;
   opacity: 0;
+  transform: translateY(24px);
   pointer-events: none;
-  transition: opacity 400ms ease;
+  transition: opacity 380ms var(--ease-out-smooth), transform 380ms var(--ease-out-smooth);
 }
 
 .done-page--active {
   opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
 .done-page__inner {
   width: 100%;
   max-width: 390px;
-  padding: var(--page-h-pad);
+  padding: 48px 20px 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  text-align: center;
+  gap: 0;
 }
 
-.done-page__icon {
-  width: 64px;
-  height: 64px;
+/* ── eyebrow ── */
+.done-eyebrow {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--sub);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: doneItemFadeUp 500ms 300ms var(--ease-out-smooth) forwards;
+}
+
+/* ── 향수 레이블 래퍼 ── */
+.done-label-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.done-label {
+  position: relative;
+  border: 1px solid rgba(28,27,24,0.22);
+  border-radius: 2px;
+  padding: 32px 28px 36px;
+  background: #FAF7F3;
+  box-shadow:
+    0 1px 2px rgba(28,27,24,0.06),
+    0 4px 16px rgba(28,27,24,0.08);
+}
+
+/* Diptyque 내부 가는 선 */
+.done-label::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 0.5px solid rgba(28,27,24,0.14);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+/* ── 레이블 헤더 ── */
+.done-label__brand {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.done-label__brand-name {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--sub);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.done-label__brand-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--fg);
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+/* ── 구분선 ── */
+.done-label__divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+.done-label__divider::before,
+.done-label__divider::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: rgba(28,27,24,0.22);
+}
+.done-label__divider-ornament {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 10px;
+  color: var(--sub);
+  letter-spacing: 0.1em;
+}
+
+/* ── 강연 목록 ── */
+.done-label__notes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 4px;
+}
+
+.done-label__note {
+  display: flex;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 0.5px solid rgba(28,27,24,0.08);
+  opacity: 0;
+}
+.done-label__note:last-child { border-bottom: none; }
+
+@keyframes doneTypeIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes doneItemFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.done-label__note:nth-child(1) { animation: doneTypeIn 400ms 800ms  var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(2) { animation: doneTypeIn 400ms 1050ms var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(3) { animation: doneTypeIn 400ms 1300ms var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(4) { animation: doneTypeIn 400ms 1550ms var(--ease-out-smooth) forwards; }
+
+.done-label__note-meta {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 9.5px;
+  color: var(--sub);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  min-width: 72px;
+  padding-top: 1px;
+}
+
+.done-label__note-title {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 11.5px;
+  color: var(--fg);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  flex: 1;
+}
+
+/* 시그니처 강연 */
+.done-label__note--signature .done-label__note-title {
+  color: var(--accent);
+  font-weight: 700;
+}
+.done-label__note--signature .done-label__note-meta {
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.done-signature-mark {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 8px;
+  color: var(--accent);
+  opacity: 0.8;
+  margin-left: 5px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ── 레이블 푸터 ── */
+.done-label__footer {
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  opacity: 0;
+  animation: doneItemFadeUp 500ms 1800ms var(--ease-out-smooth) forwards;
+}
+
+.done-label__owner {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--sub);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.done-label__owner-name {
+  display: block;
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: 0.08em;
+  margin-top: 3px;
+}
+
+.done-label__batch {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 9px;
+  color: var(--sub);
+  letter-spacing: 0.12em;
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ── 조향 完 씰 ── */
+.done-label__seal {
+  position: absolute;
+  bottom: -18px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border: 0.5px solid rgba(28,27,24,0.22);
   border-radius: 50%;
-  background-color: var(--accent);
+  background: #FAF7F3;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
+  z-index: 3;
 }
 
-.done-page__icon svg {
-  width: 28px;
-  height: 28px;
-  stroke: var(--bg);
-  stroke-width: 2.5;
-  fill: none;
-}
-
-.done-page__message {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-  color: var(--fg);
-}
-
-.done-page__sub {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.65;
+.done-label__seal-inner {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 7px;
   color: var(--sub);
-  max-width: 280px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ── 완성 카피 ── */
+.done-caption {
+  margin-top: 32px;
+  text-align: center;
+  opacity: 0;
+  animation: doneItemFadeUp 600ms 2100ms var(--ease-out-smooth) forwards;
+}
+
+.done-caption__main {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--fg);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  display: block;
+}
+
+.done-caption__sub {
+  font-family: var(--font-base, inherit);
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--sub);
+  letter-spacing: 0.04em;
+  margin-top: 10px;
+  display: block;
+  line-height: 1.7;
 }
 
 /* ── 13. 담기 애니메이션 ──────────────────────────────── */

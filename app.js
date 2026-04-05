@@ -17,6 +17,7 @@ const state = {
   swipers: {},
   pendingReplace: null, // { timeSlot, newLectureId }
   signature: null,
+  email: null,
   altOk: {
     1: true,
     2: true,
@@ -186,7 +187,6 @@ function renderModal(lectureId) {
   const modal = document.getElementById('modal');
   if (!modal) return;
 
-  const mod = getCategoryModifier(lec.categoryKey);
   const timeSlot = lec.timeSlot;
   const selectedId = state.selections[timeSlot];
   const isSelected = selectedId === lectureId;
@@ -198,7 +198,6 @@ function renderModal(lectureId) {
     btnClass = 'btn-pick btn-pick--selected';
     btnText = '이미 담긴 강연이에요';
   } else if (hasOtherSelection && getSelectedCount() === 4) {
-    // 4개 꽉 찬 경우: 같은 타임에 다른 게 담겼으므로 교체 가능하게
     btnClass = 'btn-pick';
     btnText = '이 강연으로 교체하기';
   }
@@ -215,7 +214,7 @@ function renderModal(lectureId) {
           <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <span class="modal__category modal__category--${mod}">${lec.category}</span>
+      <span class="modal__category modal__category--${getCategoryModifier(lec.categoryKey)}">${lec.category}</span>
       <h2 class="modal__title">${lec.title}</h2>
       <p class="modal__scent-note">${lec.scentNote}</p>
       <div class="modal__divider"></div>
@@ -302,6 +301,72 @@ function renderRecipePage() {
       if (btn) btn.disabled = !state.signature;
     });
   }
+}
+
+/* ── 렌더링: 완료 페이지 ─────────────────────────────────── */
+function renderDonePage() {
+  const inner = document.querySelector('.done-page__inner');
+  if (!inner) return;
+
+  const slotDateMap = { 1: '4/28', 2: '4/28', 3: '4/29', 4: '4/29' };
+  const slotLabelMap = { 1: '1타임', 2: '2타임', 3: '1타임', 4: '2타임' };
+
+  const noteItems = [1, 2, 3, 4]
+    .filter(slot => state.selections[slot])
+    .map(slot => {
+      const lec = getLectureById(state.selections[slot]);
+      const isSignature = state.signature === lec.id;
+      const sigClass = isSignature ? ' done-label__note--signature' : '';
+      const sigMark  = isSignature ? '<span class="done-signature-mark">★</span>' : '';
+      return `
+        <li class="done-label__note${sigClass}">
+          <span class="done-label__note-meta">${slotDateMap[slot]} · ${slotLabelMap[slot]}&nbsp;&nbsp;</span>
+          <span class="done-label__note-title">${lec.title}</span>
+          ${sigMark}
+        </li>`;
+    }).join('');
+
+  const username = state.email
+    ? state.email.split('@')[0].toUpperCase()
+    : '—';
+
+  inner.innerHTML = `
+    <p class="done-eyebrow">Note Composition Complete</p>
+    <div class="done-label-wrap">
+      <div class="done-label">
+        <div class="done-label__brand">
+          <span class="done-label__brand-name">15min · Svashi</span>
+          <span class="done-label__brand-title">My Scent Note</span>
+        </div>
+        <div class="done-label__divider">
+          <span class="done-label__divider-ornament">✦</span>
+        </div>
+        <ul class="done-label__notes">${noteItems}</ul>
+        <div class="done-label__divider" style="margin-top:16px;margin-bottom:0;">
+          <span class="done-label__divider-ornament">· · ·</span>
+        </div>
+        <div class="done-label__footer">
+          <div class="done-label__owner">
+            Composed by
+            <span class="done-label__owner-name">${username}</span>
+          </div>
+          <div class="done-label__batch">
+            Batch No. 2026–04<br>
+            Svashi Vol. III
+          </div>
+        </div>
+      </div>
+      <div class="done-label__seal">
+        <span class="done-label__seal-inner">조향<br>完</span>
+      </div>
+    </div>
+    <div class="done-caption">
+      <span class="done-caption__main">조향이 완성됐어요.</span>
+      <span class="done-caption__sub">
+        신청이 완료됐어요.<br>
+        4월 28–29일, 스바시에서 만나요.
+      </span>
+    </div>`;
 }
 
 /* ── 인터랙션: 모달 열기/닫기 ────────────────────────────── */
@@ -650,12 +715,20 @@ function bindEvents() {
       if (errorEl) errorEl.textContent = '';
       btn.disabled = true;
       btn.textContent = '...';
+      state.email = email;
 
       submitWithEmail(email)
         .then(() => {
-          document.getElementById('donePage')?.classList.add('done-page--active');
+          const signPage = document.getElementById('signPage');
+          const donePage = document.getElementById('donePage');
+          signPage?.classList.add('sign-page--exit');
+          setTimeout(() => {
+            renderDonePage();
+            donePage?.classList.add('done-page--active');
+          }, 100);
         })
         .catch(() => {
+          state.email = null;
           if (errorEl) errorEl.textContent = '잠시 후 다시 시도해주세요';
           btn.disabled = false;
           btn.textContent = '서명하기';
