@@ -110,7 +110,7 @@ function renderCard(lecture, cardState = 'default') {
 }
 
 /* ── 렌더링: 바텀시트 ────────────────────────────────────── */
-function renderBottomSheet() {
+function renderBottomSheet(animatingSlot = null) {
   const slotsEl = document.getElementById('sheetSlots');
   const statusEl = document.getElementById('sheetStatus');
   const btnComplete = document.getElementById('btnComplete');
@@ -151,7 +151,7 @@ function renderBottomSheet() {
     if (!selId) {
       return `
         <div class="slot slot--empty" data-slot="${slot}">
-          <div class="slot__thumb">${slot}</div>
+          <div class="slot__thumb"><span>${slot}</span></div>
           <div class="slot__inner">
             <span class="slot__time-label">${slotLabel}</span>
           </div>
@@ -160,9 +160,10 @@ function renderBottomSheet() {
     const lec = getLectureById(selId);
     if (!lec) return '';
     const col = lec.id.slice(-1); // 'a' | 'b' | 'c'
+    const coloredClass = slot === animatingSlot ? '' : 'slot__thumb--colored';
     return `
       <div class="slot" data-slot="${slot}">
-        <div class="slot__thumb" data-column="${col}">${slot}</div>
+        <div class="slot__thumb ${coloredClass}" data-column="${col}"><span>${slot}</span></div>
         <div class="slot__inner">
           <span class="slot__time-label">${slotLabel}</span>
           <p class="slot__title">${lec.title}</p>
@@ -412,7 +413,7 @@ function handlePickClick(lectureId) {
   state.selections[timeSlot] = lectureId;
   closeModal();
   renderTimeSections();
-  renderBottomSheet();
+  renderBottomSheet(timeSlot); // 새로 담기는 슬롯은 gray로 시작
   refreshSwipers();
   flyAnimation(lectureId);
 }
@@ -432,14 +433,19 @@ function flyAnimation(lectureId) {
 
   if (!lec) return;
 
-  // renderBottomSheet()가 DOM을 교체한 직후라 다음 프레임에서 클래스 부착
-  requestAnimationFrame(() => {
-    const thumb = document.querySelector(`.slot[data-slot="${lec.timeSlot}"] .slot__thumb`);
-    if (thumb) {
-      thumb.classList.add('slot__thumb--fill');
-      thumb.addEventListener('animationend', () => thumb.classList.remove('slot__thumb--fill'), { once: true });
-    }
-  });
+  // 바텀시트 transition(350ms) 끝난 후 물드는 애니메이션 시작
+  setTimeout(() => {
+    requestAnimationFrame(() => {
+      const thumb = document.querySelector(`.slot[data-slot="${lec.timeSlot}"] .slot__thumb`);
+      if (thumb) {
+        thumb.classList.add('slot__thumb--fill');
+        thumb.addEventListener('animationend', () => {
+          thumb.classList.add('slot__thumb--colored');
+          thumb.classList.remove('slot__thumb--fill');
+        }, { once: true });
+      }
+    });
+  }, 360);
 }
 
 /* ── 최종 확인 페이지 열기 ───────────────────────────────── */
