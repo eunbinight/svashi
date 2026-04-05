@@ -891,6 +891,7 @@ ul, ol {
   font-style: italic;
   font-weight: 400;
   line-height: 30px;
+  white-space: pre-wrap;
   color: var(--muted);
   letter-spacing: 0.02em;
 }
@@ -962,10 +963,14 @@ ul, ol {
   font-weight: 700;
   color: var(--bg);
   letter-spacing: -0.02em;
+  transition: background-color 700ms ease, color 900ms ease;
 }
 
-/* 카테고리 색상 — 애니메이션 완료 후 JS가 추가하는 클래스 */
-.slot__thumb--colored { background-color: var(--slot-color); }
+/* 카테고리 색상 — background가 정적 상태 담당, ::before는 애니메이션 전용 */
+.slot__thumb--colored {
+  background-color: var(--slot-color);
+  color: var(--ink);
+}
 
 /* 숫자 레이어 — ::before 위에, 독립 레이어로 승격해 첫 애니메이션 시 깜빡임 방지 */
 .slot__thumb span {
@@ -985,17 +990,18 @@ ul, ol {
   z-index: 0;
   will-change: transform, opacity, filter;
 }
-.slot__thumb::before { background-color: var(--slot-color); }
+.slot__thumb::before { background-color: var(--slot-color-strong, var(--slot-color)); }
 
 .slot__thumb--fill::before {
-  animation: thumbFill 1100ms ease-out forwards;
+  animation: thumbFill 1500ms ease-out forwards;
 }
 
 @keyframes thumbFill {
-  0%   { transform: scale(0);    opacity: 0;    filter: blur(8px);  }
-  15%  { transform: scale(0.35); opacity: 0.55; filter: blur(5px);  }
-  60%  { transform: scale(1.2);  opacity: 0.85; filter: blur(2px);  }
-  100% { transform: scale(1.8);  opacity: 1;    filter: blur(0px);  }
+  0%   { transform: scale(0);    opacity: 0;    filter: blur(8px); }
+  15%  { transform: scale(0.35); opacity: 0.55; filter: blur(5px); }
+  55%  { transform: scale(1.2);  opacity: 0.85; filter: blur(2px); }
+  72%  { transform: scale(1.8);  opacity: 1;    filter: blur(0px); }
+  100% { transform: scale(1.8);  opacity: 0;    filter: blur(0px); }
 }
 
 .slot--empty .slot__thumb {

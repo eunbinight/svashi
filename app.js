@@ -60,8 +60,8 @@ function getSelectedCount() {
 
 function getStatusMessage(count) {
   const messages = {
-    0: '4개의 15분, 나만의 조합으로 채워보세요.',
-    1: '첫 번째 시간이 열렸어요',
+    0: '조향 노트에 어떤 15분들을 채울지,\n하나씩 골라보세요.',
+    1: '첫 번째 15분이 담겼어요.',
     2: '두 가지 결이 만나고 있어요',
     3: '마지막 한 자리가 기다려요',
     4: '당신만의 스바시가 완성됐어요 ✦',
@@ -219,10 +219,12 @@ function renderBottomSheet(animatingSlot = null) {
     const lec = getLectureById(selId);
     if (!lec) return '';
     const coloredClass = slot === animatingSlot ? '' : 'slot__thumb--colored';
-    const slotColor = `rgb(${getAuraRGB(lec.category)})`;
+    const rgb = getAuraRGB(lec.category);
+    const slotColor = `rgba(${rgb},0.28)`;
+    const slotColorStrong = `rgb(${rgb})`;
     return `
       <div class="slot" data-slot="${slot}">
-        <div class="slot__thumb ${coloredClass}" style="--slot-color:${slotColor}"><span>${slot}</span></div>
+        <div class="slot__thumb ${coloredClass}" style="--slot-color:${slotColor};--slot-color-strong:${slotColorStrong}"><span>${slot}</span></div>
         <div class="slot__inner">
           <span class="slot__time-label">${slotLabel}</span>
           <p class="slot__title">${lec.title}</p>
@@ -572,9 +574,11 @@ function flyAnimation(lectureId) {
     requestAnimationFrame(() => {
       const thumb = document.querySelector(`.slot[data-slot="${lec.timeSlot}"] .slot__thumb`);
       if (thumb) {
+        // 블룸 시작. ::before가 opacity 0.28로 정착(forwards) — 텍스트 색 전환도 동시
         thumb.classList.add('slot__thumb--fill');
+        thumb.classList.add('slot__thumb--colored');
+        // 애니메이션 종료 시 ::before는 이미 opacity 0 → --fill 제거해도 시각 변화 없음
         thumb.addEventListener('animationend', () => {
-          thumb.classList.add('slot__thumb--colored');
           thumb.classList.remove('slot__thumb--fill');
         }, { once: true });
       }
