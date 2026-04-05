@@ -27,9 +27,22 @@ const state = {
 };
 
 /* ── 유틸 ────────────────────────────────────────────────── */
-function getCategoryModifier(categoryKey) {
-  // categoryKey는 이미 공백·특수문자 제거된 값 (번아웃회복, 일루틴 등)
-  return categoryKey;
+function getAuraGradient(category) {
+  const map = {
+    '커리어':      '185,155,95',
+    '번아웃·회복': '110,125,160',
+    '관계':        '120,148,130',
+    '정체성':      '180,130,110',
+    '성장':        '130,155,105',
+    '일·루틴':     '145,120,160',
+    '회복':        '130,148,160',
+  };
+  const rgb = map[category] || '150,140,130';
+  return [
+    `radial-gradient(ellipse 55% 48% at 50% 52%, rgba(${rgb},0.28) 0%, transparent 68%)`,
+    `radial-gradient(ellipse 38% 34% at 42% 44%, rgba(${rgb},0.16) 0%, transparent 58%)`,
+    `radial-gradient(ellipse 65% 56% at 55% 58%, rgba(${rgb},0.08) 0%, transparent 65%)`,
+  ].join(', ');
 }
 
 function getLectureById(id) {
@@ -51,17 +64,26 @@ function getStatusMessage(count) {
   return messages[count] || '';
 }
 
-/* ── 인라인 강연 데이터 ───────────────────────────────────── */
-const LECTURES_DATA = [{"id":"t1-a","timeSlot":1,"date":"4/28","time":"12:37–12:57","category":"커리어","hookLine":"방향 없이 달려온 3년, 그 끝에 마주한 질문","title":"커리어 나침반 찾기","speaker":"김민준","speakerBio":"스파르타코딩클럽 PM, 5년차","scentNote":"처음엔 막막했다. 이력서도, 포트폴리오도, 아무것도 없던 시절. 그런데 어느 날 갑자기 깨달았다—내가 멈추지 않았던 이유를 비로소 알게 됐다.","recommendFor":["커리어 전환을 고민 중인 분","방향성 없이 바쁘게만 살아온 분"],"illustrationUrl":"","categoryKey":"커리어"},{"id":"t1-b","timeSlot":1,"date":"4/28","time":"12:37–12:57","category":"번아웃·회복","hookLine":"열심히 했는데 텅 빈 느낌이 드는 날","title":"다시 숨 쉬는 법","speaker":"이수현","speakerBio":"전 스타트업 디자이너, 번아웃 경험자","scentNote":"아무것도 하고 싶지 않은 아침이 있었다. 그게 게으름인 줄 알았다. 알고 보니 몸이 먼저 알고 있었다—나 지금 한계야, 라고.","recommendFor":["쉬어야 하는데 쉬지 못하는 분","에너지가 바닥났다고 느끼는 분"],"illustrationUrl":"","categoryKey":"번아웃회복"},{"id":"t1-c","timeSlot":1,"date":"4/28","time":"12:37–12:57","category":"관계","hookLine":"말하지 않아도 통할 거라 믿었던 그 사람","title":"말 못 한 마음의 무게","speaker":"박지연","speakerBio":"조직심리 컨설턴트, 前 HR 리더","scentNote":"침묵이 배려인 줄 알았다. 그런데 어느 순간 그 침묵이 벽이 됐다. 관계는 언제나 말 한마디 직전의 용기에서 시작된다.","recommendFor":["말하기 어려운 관계가 있는 분","조직 내 갈등을 경험 중인 분"],"illustrationUrl":"","categoryKey":"관계"},{"id":"t2-a","timeSlot":2,"date":"4/28","time":"14:10–14:30","category":"성장","hookLine":"틀려도 괜찮다는 말이 왜 이렇게 어렵지","title":"실패를 수집하는 사람들","speaker":"최동현","speakerBio":"스파르타 강사, 개발자 출신 교육자","scentNote":"제일 못했던 프로젝트를 이제는 가장 자주 꺼낸다. 그 실패가 나를 더 단단하게 만든 코드였다는 걸, 늦게야 알았다.","recommendFor":["실수가 두려운 분","완벽하지 않으면 시작을 못 하는 분"],"illustrationUrl":"","categoryKey":"성장"},{"id":"t2-b","timeSlot":2,"date":"4/28","time":"14:10–14:30","category":"일·루틴","hookLine":"투두리스트는 쌓이는데 나는 왜 멈춰 있지","title":"루틴이 아닌 리듬으로","speaker":"윤서아","speakerBio":"프리랜서 UX 디자이너, 생산성 블로거","scentNote":"매일 5시 기상, 물 한 잔, 저널링. 3주 만에 무너졌다. 루틴이 나를 위한 게 아니라 남에게 보여주기 위한 것이었다는 걸 그때 알았다.","recommendFor":["루틴을 만들고 싶지만 지속하지 못한 분","생산성 도구를 너무 많이 써봤지만 효과가 없었던 분"],"illustrationUrl":"","categoryKey":"일루틴"},{"id":"t2-c","timeSlot":2,"date":"4/28","time":"14:10–14:30","category":"정체성","hookLine":"나는 내가 뭘 좋아하는지 모른다","title":"좋아함의 언어","speaker":"강하린","speakerBio":"작가 겸 커리어 코치","scentNote":"20대에 좋아하는 것을 묻는 질문이 제일 무서웠다. 모른다고 하면 안 될 것 같았다. 그런데 모르는 게 사실 출발점이었다.","recommendFor":["자신이 뭘 원하는지 모르겠는 분","좋아하는 것과 잘하는 것 사이에서 고민 중인 분"],"illustrationUrl":"","categoryKey":"정체성"},{"id":"t3-a","timeSlot":3,"date":"4/29","time":"12:37–12:57","category":"번아웃·회복","hookLine":"열정이 사라졌을 때 가장 무서웠다","title":"열정 이후의 삶","speaker":"정우성","speakerBio":"전 스타트업 창업자, 현 명상 수련가","scentNote":"매일 24시간이 부족했던 사람이 어느 날 일어나지 못했다. 그 정지 버튼을 누른 건 내가 아니라 내 몸이었다. 회복은 포기가 아니다.","recommendFor":["예전만큼 일이 즐겁지 않은 분","한 번쯤 모든 걸 내려놓고 싶었던 분"],"illustrationUrl":"","categoryKey":"번아웃회복"},{"id":"t3-b","timeSlot":3,"date":"4/29","time":"12:37–12:57","category":"관계","hookLine":"좋은 동료가 되고 싶었는데 언제부터 피하게 됐지","title":"조직에서 나를 잃지 않는 법","speaker":"신예은","speakerBio":"리더십 코치, 스파르타 매니저 출신","scentNote":"팀에서 인정받을수록 나는 희미해졌다. 좋은 팀원이 되는 것과 나답게 있는 것, 이 둘이 충돌하는 순간이 반드시 온다.","recommendFor":["조직 안에서 자신을 잃는 느낌이 드는 분","관계 때문에 에너지가 빠지는 분"],"illustrationUrl":"","categoryKey":"관계"},{"id":"t3-c","timeSlot":3,"date":"4/29","time":"12:37–12:57","category":"성장","hookLine":"배움이 즐거웠던 때가 있었다, 언젠가","title":"다시 배우고 싶어지는 순간","speaker":"오지훈","speakerBio":"스파르타 튜터, 학습 설계 연구자","scentNote":"배움이 두려운 게 아니라, 틀리는 게 두려웠다. 그 차이를 아는 것만으로 내 공부 방식이 완전히 달라졌다.","recommendFor":["새로운 것을 배우고 싶지만 시작이 두려운 분","공부에 흥미를 잃은 지 오래된 분"],"illustrationUrl":"","categoryKey":"성장"},{"id":"t4-a","timeSlot":4,"date":"4/29","time":"14:10–14:30","category":"커리어","hookLine":"이직을 고민하는 게 아니라 도망치려는 거 아닐까","title":"도망과 선택의 차이","speaker":"한소희","speakerBio":"커리어 컨설턴트, 前 빅테크 PM","scentNote":"세 번 이직하고 나서야 알았다. 첫 번째는 도망이었고, 두 번째는 실험이었고, 세 번째가 비로소 선택이었다는 걸.","recommendFor":["이직을 반복해도 해결이 안 되는 것 같은 분","변화가 두렵지만 머무르는 것도 답답한 분"],"illustrationUrl":"","categoryKey":"커리어"},{"id":"t4-b","timeSlot":4,"date":"4/29","time":"14:10–14:30","category":"일·루틴","hookLine":"바쁜데 왜 아무것도 안 한 것 같지","title":"진짜 바쁨과 가짜 바쁨","speaker":"류재원","speakerBio":"전략기획 팀장, 시간관리 강연자","scentNote":"회의 4개, 슬랙 알림 수십 개, 퇴근 후 녹초. 그런데 정작 중요한 건 하나도 진행되지 않았다. 바쁨이 습관이 됐을 때 일어나는 일.","recommendFor":["늘 바쁜데 성과가 안 나는 느낌인 분","집중력이 예전 같지 않은 분"],"illustrationUrl":"","categoryKey":"일루틴"},{"id":"t4-c","timeSlot":4,"date":"4/29","time":"14:10–14:30","category":"정체성","hookLine":"남들 눈에 좋아 보이는 삶을 살고 있는데 왜 공허하지","title":"조명 밖의 나","speaker":"임채원","speakerBio":"소셜미디어 크리에이터, 전 마케터","scentNote":"좋아요가 쌓일수록 내 안의 목소리는 작아졌다. 외부의 인정이 내 존재 이유가 됐을 때, 아무것도 남지 않았다.","recommendFor":["타인의 시선에 많이 영향받는 분","진짜 나다움이 무엇인지 찾고 싶은 분"],"illustrationUrl":"","categoryKey":"정체성"}];
+/* ── 강연 데이터 ─────────────────────────────────────────── */
+const LECTURES_DATA = [
+  { id:'t1-a', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'커리어',      title:"커리어에서 '프로'가 되고 싶다면",           speaker:'김지현', speakerBio:'스타트업 기획자 · 9년차',        scentNotes:['이직','생존','전략'],      scentNote:'9번 옮기면서 발견한 건,\n버티는 법이 아니라 고르는 법이었다.',                                        illustrationUrl:'', recommendFor:['방향을 직접 고르고 싶은 분','이직이 두렵지만 움직이고 싶은 분','오래 버텨온 방식이 맞는지 의심되는 분'] },
+  { id:'t1-b', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'번아웃·회복', title:'800km를 걸으면 뭔가 달라질까요',             speaker:'박준영', speakerBio:'개발자 · 산티아고 완주',            scentNotes:['걷기','고요','위로'],       scentNote:'다 내려놓고 걷기 시작했더니,\n왜 달리고 있었는지가 보였다.',                                              illustrationUrl:'', recommendFor:['지쳐서 멈추고 싶은 분','아무것도 안 하는 시간이 필요한 분','몸이 먼저 신호를 보내고 있는 분'] },
+  { id:'t1-c', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'관계',        title:'결혼 전 반드시 짚고 넘어가야 하는 것들',    speaker:'이수민', speakerBio:'디자이너 · 기혼 2년차',            scentNotes:['관계','선택','현실'],       scentNote:'일도 사랑도 놓치고 싶지 않아서,\n둘 다 붙잡는 방법을 찾았다.',                                             illustrationUrl:'', recommendFor:['관계에서 현실적인 이야기를 듣고 싶은 분','결혼이나 파트너십을 진지하게 고민 중인 분','둘이 함께 성장하는 방식을 찾는 분'] },
+  { id:'t2-a', timeSlot:2, date:'4/28', time:'14:10–14:30', category:'정체성',      title:'좋아하는 일이랑 잘 하는 일, 뭘 해야 할까요', speaker:'최다은', speakerBio:'개발자 → 미술 유학생',             scentNotes:['재능','용기','전환'],       scentNote:'공대생이 미술을 배워 독일에 갔다.\n정답을 찾아서가 아니라, 해보고 싶어서.',                                   illustrationUrl:'', recommendFor:['재능과 흥미 사이에서 고민 중인 분','전공과 다른 길을 걷고 싶은 분','정답 없이 해보고 싶은 분'] },
+  { id:'t2-b', timeSlot:2, date:'4/28', time:'14:10–14:30', category:'번아웃·회복', title:'내 현실이 마음에 안 든다면',                speaker:'정유진', speakerBio:'PM · 요가 4년차',                 scentNotes:['몸','현실','받아들임'],     scentNote:'요가를 시작한 건 몸 때문이었는데,\n일하는 방식이 바뀌었다.',                                                 illustrationUrl:'', recommendFor:['일과 몸의 균형을 찾고 있는 분','번아웃이 아닌 다른 접근을 원하는 분','현실을 받아들이는 법을 배우고 싶은 분'] },
+  { id:'t2-c', timeSlot:2, date:'4/28', time:'14:10–14:30', category:'번아웃·회복', title:'사진 백만 장을 찍으면 번아웃이 낫는다고요',  speaker:'한승호', speakerBio:'회계사 → 스타트업 9년차',          scentNotes:['번아웃','셔터','회복'],     scentNote:'회계법인 4년, 스타트업 9년.\n무너지지 않은 게 아니라, 일어서는 법을 배웠다.',                                illustrationUrl:'', recommendFor:['번아웃을 겪어본 분','일 외의 무언가로 회복한 경험이 궁금한 분','오래 버텨온 자신에게 공감이 필요한 분'] },
+  { id:'t3-a', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'성장',        title:'창업 과정에서 만난 3가지 우연',             speaker:'오민준', speakerBio:'창업자 · 3회차',                  scentNotes:['우연','기회','용기'],       scentNote:"'우연'이라고 부르기엔\n너무 자주 왔다.",                                                                    illustrationUrl:'', recommendFor:['기회를 알아보는 눈을 기르고 싶은 분','창업이나 새로운 시작을 준비 중인 분','우연이 필연이 되는 경험이 궁금한 분'] },
+  { id:'t3-b', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'일·루틴',     title:'당신의 취미는 무엇인가요',                  speaker:'서지우', speakerBio:'영상 PD · 뮤지컬 마니아',          scentNotes:['집착','취미','삶의 밀도'], scentNote:'월 80만원을 뮤지컬에 쓴다.\n낭비인지 투자인지는, 들으면 판단해봐.',                                         illustrationUrl:'', recommendFor:['삶의 밀도를 높이고 싶은 분','취미에 진심인 사람의 이야기가 궁금한 분','일 외의 시간을 어떻게 쓸지 고민 중인 분'] },
+  { id:'t3-c', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'성장',        title:'배움이 즐거웠던 때가 있었다, 언젠가',       speaker:'임채원', speakerBio:'스파르타 튜터 · 학습 연구자',      scentNotes:['두려움','틀림','전환'],     scentNote:'배움이 두려운 게 아니라, 틀리는 게 두려웠다.\n그 차이를 아는 것만으로 공부 방식이 달라졌다.',                  illustrationUrl:'', recommendFor:['공부가 두렵게 느껴지는 분','배움의 방식을 바꾸고 싶은 분','틀리는 것에 예민한 분'] },
+  { id:'t4-a', timeSlot:4, date:'4/29', time:'14:10–14:30', category:'커리어',      title:'이직을 고민하는 건지, 도망치려는 건지',    speaker:'강태양', speakerBio:'커리어 컨설턴트 · 前 빅테크 PM',  scentNotes:['이직','도망','선택'],       scentNote:'세 번 이직하고 나서야 알았다.\n첫 번째는 도망이었고, 세 번째가 비로소 선택이었다는 걸.',                      illustrationUrl:'', recommendFor:['이직과 도망 사이에서 헷갈리는 분','커리어 방향을 객관적으로 점검하고 싶은 분','더 나은 선택을 하고 싶은 분'] },
+  { id:'t4-b', timeSlot:4, date:'4/29', time:'14:10–14:30', category:'일·루틴',     title:'바쁜데 왜 아무것도 안 한 것 같지',          speaker:'윤소희', speakerBio:'전략기획 팀장 · 시간관리 강연자', scentNotes:['바쁨','집중','루틴'],       scentNote:'회의 4개, 슬랙 수십 개, 퇴근 후 녹초.\n정작 중요한 건 하나도 진행되지 않았다.',                              illustrationUrl:'', recommendFor:['바쁘지만 성과가 없는 느낌인 분','루틴과 집중의 차이를 알고 싶은 분','회의와 업무 사이에서 지친 분'] },
+  { id:'t4-c', timeSlot:4, date:'4/29', time:'14:10–14:30', category:'정체성',      title:'남들 눈에 좋아 보이는 삶인데 왜 공허하지',  speaker:'문하린', speakerBio:'소셜미디어 크리에이터 · 전 마케터', scentNotes:['인정','공허','나다움'],     scentNote:'좋아요가 쌓일수록 내 안의 목소리는 작아졌다.\n외부의 인정이 존재 이유가 됐을 때, 아무것도 남지 않았다.',     illustrationUrl:'', recommendFor:['외부 인정에 의존하는 패턴이 있는 분','공허함의 원인을 찾고 싶은 분','나다움을 정의하고 싶은 분'] },
+];
 
 /* ── 초기화 ──────────────────────────────────────────────── */
-async function loadLectures() {
-  try {
-    state.lectures = LECTURES_DATA;
-    renderAll();
-  } catch (err) {
-    console.error('lectures.json 로드 실패:', err);
-  }
+function loadLectures() {
+  state.lectures = LECTURES_DATA;
+  renderAll();
 }
 
 function renderAll() {
@@ -88,11 +110,19 @@ function renderTimeSections() {
 }
 
 function renderCard(lecture, cardState = 'default') {
-  const selectedClass = cardState === 'selected' ? ' card--selected' : '';
-  const siblingClass  = cardState === 'sibling'  ? ' card--sibling'  : '';
-  const imgHtml = lecture.illustrationUrl
-    ? `<img class="card__thumb" src="${lecture.illustrationUrl}" alt="${lecture.title}">`
-    : `<div class="card__thumb"></div>`;
+  const selectedClass  = cardState === 'selected' ? ' card--selected' : '';
+  const siblingClass   = cardState === 'sibling'  ? ' card--sibling'  : '';
+  const auraGradient   = getAuraGradient(lecture.category);
+  const notes          = lecture.scentNotes || [];
+  const noteLabels     = ['Top', 'Heart', 'Base'];
+  const notePcts       = ['43%', '35%', '22%'];
+
+  const noteRows = notes.slice(0, 3).map((n, i) => `
+    <div class="card__note-row">
+      <span class="card__note-label">${noteLabels[i]}</span>
+      <span class="card__note-value">${n}</span>
+      <span class="card__note-pct">${notePcts[i]}</span>
+    </div>`).join('');
 
   return `
     <div class="card${selectedClass}${siblingClass}"
@@ -101,10 +131,33 @@ function renderCard(lecture, cardState = 'default') {
          role="button"
          tabindex="0"
          aria-label="${lecture.title} 강연 상세 보기">
-      ${imgHtml}
+
+      <div class="card__header">
+        <span class="card__brand">Svashi · Vol. III</span>
+        <span class="card__cat">${lecture.category}</span>
+      </div>
+
+      <div class="card__aura">
+        <div class="card__aura-blob" style="background:${auraGradient}"></div>
+        <img class="card__aura-logo" src="스바시로고.png" alt="">
+        <p class="card__hook">${lecture.title}</p>
+      </div>
+
+      <div class="card__bottom">
+        <div class="card__rule"></div>
+        <div class="card__footer">
+          <div class="card__note-stack">${noteRows}</div>
+          <div class="card__time">
+            <span class="card__time-date">${lecture.date} · ${lecture.timeSlot}타임</span>
+            <span class="card__time-range">${lecture.time}</span>
+            <span class="card__time-vol">Scent Note</span>
+          </div>
+        </div>
+      </div>
+
       <div class="card__check" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"/>
+        <svg viewBox="0 0 12 12" fill="none">
+          <polyline points="2,6.5 5,9.5 10,3" stroke="#FAF7F3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
     </div>`;
@@ -193,40 +246,57 @@ function renderModal(lectureId) {
   const hasOtherSelection = selectedId && selectedId !== lectureId;
 
   let btnClass = 'btn-pick';
-  let btnText = '이 강연 담기';
+  let btnText = '담기';
   if (isSelected) {
     btnClass = 'btn-pick btn-pick--selected';
-    btnText = '이미 담긴 강연이에요';
+    btnText = '이미 선택한 15분이에요';
   } else if (hasOtherSelection && getSelectedCount() === 4) {
     btnClass = 'btn-pick';
-    btnText = '이 강연으로 교체하기';
+    btnText = '교체하기';
   }
 
-  const recommendItems = lec.recommendFor
-    .map((r) => `<li class="modal__recommend-item">${r}</li>`)
-    .join('');
+  const lectureNo = String(state.lectures.indexOf(lec) + 1).padStart(2, '0');
+  const notes = (lec.scentNotes || []).join(' · ');
+  const recommendFor = lec.recommendFor || [];
+  const fitSection = recommendFor.length > 0
+    ? `<div class="modal__fit-area">
+        <p class="modal__fit-label">이런 향이 맞는 분</p>
+        <ul class="modal__fit-list">
+          ${recommendFor.map(item => `<li class="modal__fit-item">${item}</li>`).join('')}
+        </ul>
+      </div>`
+    : '';
 
   modal.innerHTML = `
     <div class="modal__inner">
-      <button class="modal__close" id="modalClose" aria-label="모달 닫기">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
-          <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <span class="modal__category modal__category--${getCategoryModifier(lec.categoryKey)}">${lec.category}</span>
-      <h2 class="modal__title">${lec.title}</h2>
-      <p class="modal__scent-note">${lec.scentNote}</p>
-      <div class="modal__divider"></div>
-      <div class="modal__speaker-row">
-        <div class="modal__speaker-info">
-          <span class="modal__speaker-name">${lec.speaker}</span>
-          <span class="modal__speaker-bio">${lec.speakerBio}</span>
+      <div class="modal__frame">
+        <div class="modal__label-top">
+          <span class="modal__no">No.${lectureNo}</span>
+          <div class="modal__label-right">
+            <span class="modal__cat-tag">${lec.category}</span>
+            <button class="modal__close" id="modalClose" aria-label="모달 닫기">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="modal__recommend">
-        <p class="modal__recommend-label">이런 분께 추천해요</p>
-        <ul>${recommendItems}</ul>
+        <div class="modal__main">
+          <h2 class="modal__hook">${lec.title}</h2>
+          <p class="modal__notes">${notes}</p>
+        </div>
+        <div class="modal__desc-area">
+          <p class="modal__desc">${lec.scentNote}</p>
+        </div>
+        ${fitSection}
+        <div class="modal__perfumer-area">
+          <div class="modal__perfumer-row">
+            <span class="modal__perfumer-label">조향사</span>
+            <span class="modal__speaker-name">${lec.speaker}</span>
+          </div>
+          <p class="modal__speaker-bio">${lec.speakerBio}</p>
+        </div>
       </div>
       <button class="${btnClass}" data-pick="${lectureId}">${btnText}</button>
     </div>`;
@@ -356,16 +426,10 @@ function renderDonePage() {
           </div>
         </div>
       </div>
-      <div class="done-label__seal">
-        <span class="done-label__seal-inner">조향<br>完</span>
-      </div>
     </div>
     <div class="done-caption">
       <span class="done-caption__main">조향이 완성됐어요.</span>
-      <span class="done-caption__sub">
-        신청이 완료됐어요.<br>
-        4월 28–29일, 스바시에서 만나요.
-      </span>
+      <span class="done-caption__sub">4월 28–29일, 스바시에서 만나요.</span>
     </div>`;
 }
 
@@ -714,25 +778,25 @@ function bindEvents() {
 
       if (errorEl) errorEl.textContent = '';
       btn.disabled = true;
-      btn.textContent = '...';
       state.email = email;
 
-      submitWithEmail(email)
-        .then(() => {
-          const signPage = document.getElementById('signPage');
-          const donePage = document.getElementById('donePage');
-          signPage?.classList.add('sign-page--exit');
-          setTimeout(() => {
-            renderDonePage();
+      // 즉시 완료 화면으로 전환 (Optimistic UI)
+      const signPage = document.getElementById('signPage');
+      const donePage = document.getElementById('donePage');
+      signPage?.classList.add('sign-page--exit');
+      setTimeout(() => {
+        renderDonePage();
+        setTimeout(() => {
+          requestAnimationFrame(() => {
             donePage?.classList.add('done-page--active');
-          }, 100);
-        })
-        .catch(() => {
-          state.email = null;
-          if (errorEl) errorEl.textContent = '잠시 후 다시 시도해주세요';
-          btn.disabled = false;
-          btn.textContent = '서명하기';
-        });
+          });
+        }, 200);
+      }, 100);
+
+      // 백그라운드에서 실제 제출
+      submitWithEmail(email).catch(() => {
+        console.error('[svashi] 서명 제출 실패 — email:', email);
+      });
       return;
     }
 
