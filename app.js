@@ -27,17 +27,22 @@ const state = {
 };
 
 /* ── 유틸 ────────────────────────────────────────────────── */
+const AURA_RGB = {
+  '정체성':      '200,148,122',  // 로즈베이지
+  '커리어':      '205,172,88',   // 앰버골드
+  '관계':        '172,138,180',  // 더스티모브
+  '번아웃·회복': '128,148,178',  // 페일슬레이트
+  '성장':        '152,172,118',  // 웜세이지
+  '일·루틴':     '168,135,180',  // 소프트라벤더
+  '회복':        '138,155,168',  // 쿨그레이
+};
+
+function getAuraRGB(category) {
+  return AURA_RGB[category] || '150,140,130';
+}
+
 function getAuraGradient(category) {
-  const map = {
-    '커리어':      '185,155,95',
-    '번아웃·회복': '110,125,160',
-    '관계':        '120,148,130',
-    '정체성':      '180,130,110',
-    '성장':        '130,155,105',
-    '일·루틴':     '145,120,160',
-    '회복':        '130,148,160',
-  };
-  const rgb = map[category] || '150,140,130';
+  const rgb = getAuraRGB(category);
   return [
     `radial-gradient(ellipse 55% 48% at 50% 52%, rgba(${rgb},0.28) 0%, transparent 68%)`,
     `radial-gradient(ellipse 38% 34% at 42% 44%, rgba(${rgb},0.16) 0%, transparent 58%)`,
@@ -213,11 +218,11 @@ function renderBottomSheet(animatingSlot = null) {
     }
     const lec = getLectureById(selId);
     if (!lec) return '';
-    const col = lec.id.slice(-1); // 'a' | 'b' | 'c'
     const coloredClass = slot === animatingSlot ? '' : 'slot__thumb--colored';
+    const slotColor = `rgb(${getAuraRGB(lec.category)})`;
     return `
       <div class="slot" data-slot="${slot}">
-        <div class="slot__thumb ${coloredClass}" data-column="${col}"><span>${slot}</span></div>
+        <div class="slot__thumb ${coloredClass}" style="--slot-color:${slotColor}"><span>${slot}</span></div>
         <div class="slot__inner">
           <span class="slot__time-label">${slotLabel}</span>
           <p class="slot__title">${lec.title}</p>

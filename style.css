@@ -946,13 +946,6 @@ ul, ol {
   justify-content: center;
 }
 
-/* 열별 색상 토큰 */
-:root {
-  --col-a: #7D3A52;
-  --col-b: #9E6B72;
-  --col-c: #C4A0A8;
-}
-
 .slot__thumb {
   width: 40px;
   height: 52px;
@@ -971,10 +964,8 @@ ul, ol {
   letter-spacing: -0.02em;
 }
 
-/* 열별 배경색 — 애니메이션 완료 후 JS가 추가하는 클래스 */
-.slot__thumb--colored[data-column="a"] { background-color: var(--col-a); }
-.slot__thumb--colored[data-column="b"] { background-color: var(--col-b); }
-.slot__thumb--colored[data-column="c"] { background-color: var(--col-c); }
+/* 카테고리 색상 — 애니메이션 완료 후 JS가 추가하는 클래스 */
+.slot__thumb--colored { background-color: var(--slot-color); }
 
 /* 숫자 레이어 — ::before 위에, 독립 레이어로 승격해 첫 애니메이션 시 깜빡임 방지 */
 .slot__thumb span {
@@ -994,9 +985,7 @@ ul, ol {
   z-index: 0;
   will-change: transform, opacity, filter;
 }
-.slot__thumb[data-column="a"]::before { background-color: var(--col-a); }
-.slot__thumb[data-column="b"]::before { background-color: var(--col-b); }
-.slot__thumb[data-column="c"]::before { background-color: var(--col-c); }
+.slot__thumb::before { background-color: var(--slot-color); }
 
 .slot__thumb--fill::before {
   animation: thumbFill 1100ms ease-out forwards;
