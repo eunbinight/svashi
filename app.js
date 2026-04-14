@@ -112,7 +112,7 @@ const LECTURES_DATA = [
     scentNote:'한 달이 지나고,\n새벽 4시 퇴근이 일상이 되었다.\n남들이 하는 "적당히"라는 말을\n평생 이해할 수 없겠다고 생각했다.',
     color:'#5E9E89', recommendFor:['몸의 신호를 의지로 버텨낸 적 있는 분','쉬면 불안하고 뒤처질 것 같은 분',"'적당히'가 게으른 핑계라 느끼는 분"] },
   { id:'t3-c', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'헤맸던 이야기',
-    title:'삼성, 마이크로소프트\n다 떠나고도 후회 없나고요?', speaker:'박영진', speakerBio:'AX솔루션팀',
+    title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?', speaker:'박영진', speakerBio:'AX솔루션팀',
     topNote:'커리어', topNotePercent:'50%', middleNote:'고민', middleNotePercent:'10%', baseNote:'기준', baseNotePercent:'40%',
     scentNote:'커리어를 선택할 때마다\n다들 날 말렸다.\n물어볼 사람도, 기준도 없었다.',
     color:'#8F7A3A', recommendFor:['이 일이 커리어가 될지 모르겠는 분','열심히는 하는데 맞는 방향인지 확신 없는 분','롤모델도 가이드도 없어 기준이 막막한 분'] },
