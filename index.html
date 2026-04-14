@@ -130,14 +130,17 @@
     <div class="sign-page__inner">
       <h1 class="sign-page__title">내 레시피에<br>서명을 남겨주세요.</h1>
       <div class="sign-page__field">
-        <input
-          type="email"
-          id="signEmail"
-          class="sign-page__input"
-          autocomplete="email"
-          inputmode="email"
-          placeholder="your@email.com"
-        >
+        <div class="sign-page__input-wrap">
+          <input
+            type="email"
+            id="signEmail"
+            class="sign-page__input"
+            autocomplete="off"
+            inputmode="email"
+            placeholder="your@teamsparta.co"
+          >
+          <ul class="sign-page__suggestions" id="signSuggestions"></ul>
+        </div>
         <p class="sign-page__error" id="signError"></p>
       </div>
       <button class="sign-page__btn" id="btnSign">서명하기</button>
@@ -153,6 +156,7 @@
 
   <!-- Swiper CDN -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="app.js?v=20260414"></script>
 </body>
 </html>

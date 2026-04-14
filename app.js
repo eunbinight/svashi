@@ -325,7 +325,6 @@ function renderModal(lectureId) {
   }
 
   const lectureNo = String(state.lectures.indexOf(lec) + 1).padStart(2, '0');
-  const notes = `${lec.topNote} ${lec.topNotePercent} · ${lec.middleNote} ${lec.middleNotePercent} · ${lec.baseNote} ${lec.baseNotePercent}`;
   const recommendFor = lec.recommendFor || [];
   const fitSection = recommendFor.length > 0
     ? `<div class="modal__fit-area">
@@ -341,30 +340,22 @@ function renderModal(lectureId) {
       <div class="modal__frame">
         <div class="modal__label-top">
           <span class="modal__no">No.${lectureNo}</span>
-          <div class="modal__label-right">
-            <span class="modal__cat-tag">${lec.category}</span>
-            <button class="modal__close" id="modalClose" aria-label="모달 닫기">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
-                <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="modal__main">
-          <h2 class="modal__hook">${lec.title}</h2>
-          <p class="modal__notes">${notes}</p>
+          <span class="modal__cat-tag">${lec.category}</span>
+          <button class="modal__close" id="modalClose" aria-label="모달 닫기">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
         <div class="modal__desc-area">
           <p class="modal__desc">${lec.scentNote}</p>
         </div>
         ${fitSection}
         <div class="modal__perfumer-area">
-          <div class="modal__perfumer-row">
-            <span class="modal__perfumer-label">조향사</span>
-            <span class="modal__speaker-name">${lec.speaker}</span>
-          </div>
-          <p class="modal__speaker-bio">${lec.speakerBio}</p>
+          <span class="modal__perfumer-label">speaker</span>
+          <span class="modal__speaker-name">${lec.speaker}</span>
+          <span class="modal__speaker-bio">${lec.speakerBio}</span>
         </div>
       </div>
       <button class="${btnClass}" data-pick="${lectureId}">${btnText}</button>
@@ -395,7 +386,7 @@ function renderRecipePage() {
         <p class="recipe-item__speaker">${lec.speaker}</p>
         <div class="recipe-item__alt">
           <input type="checkbox" id="alt-${slot}" ${altChecked} data-alt-slot="${slot}" />
-          <label class="recipe-alt-label" for="alt-${slot}">다른 강연으로 대치 가능</label>
+          <label class="recipe-alt-label" for="alt-${slot}">자리가 없으면 같은 타임 다른 강연으로 배정해주세요</label>
         </div>
       </li>`;
   }).join('');
@@ -425,6 +416,7 @@ function renderRecipePage() {
           <option value="">가장 기대되는 강연을 골라주세요</option>
           ${signatureOptions}
         </select>
+        <p class="signature-section__sub">선택한 강연의 배정 우선순위가 높아져요.</p>
       </div>
       <div class="recipe-page__footer">
         <button class="btn-finalize" id="btnFinalize" ${state.signature ? '' : 'disabled'}>이 레시피로 신청하기</button>
@@ -496,6 +488,7 @@ function renderDonePage() {
         </div>
       </div>
     </div>
+    <button class="done-save-btn" id="btnSaveNote">나의 조향 노트 저장</button>
     <div class="done-caption">
       <span class="done-caption__main">조향이 완성됐어요.</span>
       <span class="done-caption__sub">4월 28–29일, 스바시에서 만나요.</span>
@@ -661,6 +654,59 @@ function closeRecipePage() {
   document.getElementById('recipePage')?.classList.remove('recipe-page--active');
 }
 
+/* ── 이메일 자동완성 ────────────────────────────────────── */
+let cachedMembers = null;
+
+async function fetchMembers() {
+  if (cachedMembers) return cachedMembers;
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + '?action=members');
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.members) {
+      cachedMembers = data.members;
+      // fetch 완료 시 이미 입력 중이면 바로 suggestions 표시
+      const input = document.getElementById('signEmail');
+      if (input && input.value.trim()) {
+        renderSuggestions(input.value.trim());
+      }
+      return cachedMembers;
+    }
+  } catch (e) {
+    console.warn('[svashi] 구성원 목록 로딩 실패 — 직접 입력 모드');
+  }
+  return null;
+}
+
+function renderSuggestions(query) {
+  const list = document.getElementById('signSuggestions');
+  if (!list || !cachedMembers) return;
+
+  if (!query || query.length < 1) {
+    list.classList.remove('sign-page__suggestions--open');
+    list.innerHTML = '';
+    return;
+  }
+
+  const q = query.toLowerCase();
+  const filtered = cachedMembers.filter(m =>
+    m.name.toLowerCase().includes(q) || m.email.toLowerCase().includes(q)
+  ).slice(0, 6);
+
+  if (filtered.length === 0) {
+    list.classList.remove('sign-page__suggestions--open');
+    list.innerHTML = '';
+    return;
+  }
+
+  list.innerHTML = filtered.map(m => `
+    <li class="sign-page__suggestion" data-email="${m.email}">
+      <span class="sign-page__suggestion-name">${m.name.replace(/[A-Z]$/, '')}</span>
+      <span class="sign-page__suggestion-email">${m.email}</span>
+    </li>`).join('');
+  list.classList.add('sign-page__suggestions--open');
+}
+
 /* ── 신청서 제출 ─────────────────────────────────────────── */
 function handleFinalize() {
   openSignPage();
@@ -671,6 +717,8 @@ function openSignPage() {
   if (!page) return;
   page.classList.add('sign-page--active');
   history.pushState({ page: 'sign' }, '');
+  // 구성원 목록 미리 로딩
+  fetchMembers();
   setTimeout(() => {
     document.getElementById('signEmail')?.focus();
   }, 320);
@@ -863,6 +911,20 @@ function bindEvents() {
       return;
     }
 
+    // 자동완성 항목 클릭
+    const suggestion = e.target.closest('.sign-page__suggestion');
+    if (suggestion) {
+      const email = suggestion.dataset.email;
+      const input = document.getElementById('signEmail');
+      const list = document.getElementById('signSuggestions');
+      if (input) input.value = email;
+      if (list) {
+        list.classList.remove('sign-page__suggestions--open');
+        list.innerHTML = '';
+      }
+      return;
+    }
+
     // 서명하기 버튼
     if (e.target.closest('#btnSign')) {
       const btn = document.getElementById('btnSign');
@@ -907,6 +969,44 @@ function bindEvents() {
       return;
     }
 
+    // 이미지 저장 버튼
+    if (e.target.closest('#btnSaveNote')) {
+      const label = document.querySelector('.done-label-wrap');
+      if (label && typeof html2canvas !== 'undefined') {
+        const btn = document.getElementById('btnSaveNote');
+        btn.textContent = '저장 중...';
+        btn.disabled = true;
+        // 애니메이션 opacity:0 요소들을 강제 표시
+        const hidden = label.querySelectorAll('.done-label__note, .done-label__footer');
+        hidden.forEach(el => { el.style.opacity = '1'; el.style.animation = 'none'; });
+        html2canvas(label, {
+          backgroundColor: '#FFFCF6',
+          scale: 3,
+          useCORS: true,
+        }).then(canvas => {
+          // 애니메이션 없이 표시 상태 유지
+          hidden.forEach(el => { el.style.opacity = '1'; el.style.animation = 'none'; });
+          const link = document.createElement('a');
+          const memberName = (cachedMembers && state.email)
+            ? (cachedMembers.find(m => m.email === state.email)?.name || '').replace(/[A-Z]$/, '')
+            : '';
+          const fileName = memberName
+            ? `${memberName}_스바시 조향노트.png`
+            : '스바시 조향노트.png';
+          link.download = fileName;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          btn.textContent = '이미지로 저장하기';
+          btn.disabled = false;
+        }).catch(() => {
+          hidden.forEach(el => { el.style.opacity = '1'; el.style.animation = 'none'; });
+          btn.textContent = '나의 조향 노트 저장';
+          btn.disabled = false;
+        });
+      }
+      return;
+    }
+
     // 대치 체크박스
     const altCheck = e.target.closest('[data-alt-slot]');
     if (altCheck && altCheck.type === 'checkbox') {
@@ -944,4 +1044,22 @@ function bindEvents() {
       if (deltaY > 60) closeBottomSheet();
     }, { passive: true });
   }
+
+  // ── 이메일 자동완성 입력 이벤트
+  document.addEventListener('input', (e) => {
+    if (e.target.id === 'signEmail') {
+      renderSuggestions(e.target.value.trim());
+    }
+  });
+
+  // 입력창 외부 클릭 시 드롭다운 닫기
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.sign-page__input-wrap')) {
+      const list = document.getElementById('signSuggestions');
+      if (list) {
+        list.classList.remove('sign-page__suggestions--open');
+        list.innerHTML = '';
+      }
+    }
+  }, true);
 }
