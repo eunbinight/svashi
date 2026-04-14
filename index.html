@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
   <style>@font-face { font-family: 'Obangju'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/Obangju.woff2') format('woff2'); font-display: swap; }</style>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260414" />
 </head>
 <body>
   <!-- SVG 빈티지 필터 -->
@@ -29,7 +29,7 @@
     <!-- 상단 고정 네비게이션 -->
     <header class="site-nav">
       <div class="site-nav__logo">
-        <span class="logo-accent">1</span>5M<span class="logo-accent">I</span>N
+        <img src="15min-logo.png" alt="15MIN" class="site-nav__logo-img">
       </div>
       <span class="site-nav__sub">스파르타를 바꾸는 시간</span>
     </header>
@@ -37,10 +37,10 @@
 
 
     <!-- 2. 타임 섹션 × 4 (JS가 카드를 렌더링) -->
+    <div class="day-label">Day 1 <span class="day-label__date">4월 28일 (화)</span></div>
     <section class="time-section" data-slot="1">
       <div class="time-section__header">
-        <span class="time-section__date">4/28</span>
-        <span class="time-section__slot">1타임 · 12:37–12:57</span>
+        <span class="time-section__slot">1타임</span>
       </div>
       <div class="swiper swiper-t1">
         <div class="swiper-wrapper" id="swiper-wrapper-1"></div>
@@ -49,18 +49,17 @@
 
     <section class="time-section" data-slot="2">
       <div class="time-section__header">
-        <span class="time-section__date">4/28</span>
-        <span class="time-section__slot">2타임 · 14:10–14:30</span>
+        <span class="time-section__slot">2타임</span>
       </div>
       <div class="swiper swiper-t2">
         <div class="swiper-wrapper" id="swiper-wrapper-2"></div>
       </div>
     </section>
 
+    <div class="day-label day-label--day2">Day 2 <span class="day-label__date">4월 29일 (수)</span></div>
     <section class="time-section" data-slot="3">
       <div class="time-section__header">
-        <span class="time-section__date">4/29</span>
-        <span class="time-section__slot">3타임 · 12:37–12:57</span>
+        <span class="time-section__slot">1타임</span>
       </div>
       <div class="swiper swiper-t3">
         <div class="swiper-wrapper" id="swiper-wrapper-3"></div>
@@ -69,8 +68,7 @@
 
     <section class="time-section" data-slot="4">
       <div class="time-section__header">
-        <span class="time-section__date">4/29</span>
-        <span class="time-section__slot">4타임 · 14:10–14:30</span>
+        <span class="time-section__slot">2타임</span>
       </div>
       <div class="swiper swiper-t4">
         <div class="swiper-wrapper" id="swiper-wrapper-4"></div>
@@ -101,7 +99,10 @@
       </div>
       <div class="bottom-sheet__status" id="sheetStatus"></div>
     </div>
-    <button class="btn-complete btn-complete--disabled" id="btnComplete">레시피 완성하기</button>
+    <div class="bottom-sheet__actions">
+      <button class="btn-explore" id="btnExplore">다른 15분 둘러보기</button>
+      <button class="btn-complete-text btn-complete-text--disabled" id="btnComplete">레시피 완성하기</button>
+    </div>
   </div>
 
   <!-- 5. 강연 상세 모달 -->
@@ -152,6 +153,6 @@
 
   <!-- Swiper CDN -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20260414"></script>
 </body>
 </html>

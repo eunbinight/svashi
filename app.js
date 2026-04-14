@@ -27,26 +27,26 @@ const state = {
 };
 
 /* ── 유틸 ────────────────────────────────────────────────── */
-const AURA_RGB = {
-  '정체성':      '200,148,122',  // 로즈베이지
-  '커리어':      '205,172,88',   // 앰버골드
-  '관계':        '172,138,180',  // 더스티모브
-  '번아웃·회복': '128,148,178',  // 페일슬레이트
-  '성장':        '152,172,118',  // 웜세이지
-  '일·루틴':     '168,135,180',  // 소프트라벤더
-  '회복':        '138,155,168',  // 쿨그레이
-};
-
-function getAuraRGB(category) {
-  return AURA_RGB[category] || '150,140,130';
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  return [
+    parseInt(h.substring(0, 2), 16),
+    parseInt(h.substring(2, 4), 16),
+    parseInt(h.substring(4, 6), 16),
+  ].join(',');
 }
 
-function getAuraGradient(category) {
-  const rgb = getAuraRGB(category);
+function isLightColor(hex) {
+  const rgb = hexToRgb(hex).split(',').map(Number);
+  return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255 > 0.6;
+}
+
+function getAuraGradient(hex) {
+  const rgb = hexToRgb(hex);
   return [
-    `radial-gradient(ellipse 55% 48% at 50% 52%, rgba(${rgb},0.28) 0%, transparent 68%)`,
-    `radial-gradient(ellipse 38% 34% at 42% 44%, rgba(${rgb},0.16) 0%, transparent 58%)`,
-    `radial-gradient(ellipse 65% 56% at 55% 58%, rgba(${rgb},0.08) 0%, transparent 65%)`,
+    `radial-gradient(ellipse 55% 48% at 50% 52%, rgba(${rgb},0.22) 0%, transparent 68%)`,
+    `radial-gradient(ellipse 38% 34% at 42% 44%, rgba(${rgb},0.14) 0%, transparent 58%)`,
+    `radial-gradient(ellipse 65% 56% at 55% 58%, rgba(${rgb},0.07) 0%, transparent 65%)`,
   ].join(', ');
 }
 
@@ -71,18 +71,61 @@ function getStatusMessage(count) {
 
 /* ── 강연 데이터 ─────────────────────────────────────────── */
 const LECTURES_DATA = [
-  { id:'t1-a', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'커리어',      title:"커리어에서 '프로'가 되고 싶다면",           speaker:'김지현', speakerBio:'스타트업 기획자 · 9년차',        scentNotes:['이직','생존','전략'],      scentNote:'9번 옮기면서 발견한 건,\n버티는 법이 아니라 고르는 법이었다.',                                        illustrationUrl:'', recommendFor:['방향을 직접 고르고 싶은 분','이직이 두렵지만 움직이고 싶은 분','오래 버텨온 방식이 맞는지 의심되는 분'] },
-  { id:'t1-b', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'번아웃·회복', title:'800km를 걸으면 뭔가 달라질까요',             speaker:'박준영', speakerBio:'개발자 · 산티아고 완주',            scentNotes:['걷기','고요','위로'],       scentNote:'다 내려놓고 걷기 시작했더니,\n왜 달리고 있었는지가 보였다.',                                              illustrationUrl:'', recommendFor:['지쳐서 멈추고 싶은 분','아무것도 안 하는 시간이 필요한 분','몸이 먼저 신호를 보내고 있는 분'] },
-  { id:'t1-c', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'관계',        title:'결혼 전 반드시 짚고 넘어가야 하는 것들',    speaker:'이수민', speakerBio:'디자이너 · 기혼 2년차',            scentNotes:['관계','선택','현실'],       scentNote:'일도 사랑도 놓치고 싶지 않아서,\n둘 다 붙잡는 방법을 찾았다.',                                             illustrationUrl:'', recommendFor:['관계에서 현실적인 이야기를 듣고 싶은 분','결혼이나 파트너십을 진지하게 고민 중인 분','둘이 함께 성장하는 방식을 찾는 분'] },
-  { id:'t2-a', timeSlot:2, date:'4/28', time:'14:10–14:30', category:'정체성',      title:'좋아하는 일이랑 잘 하는 일, 뭘 해야 할까요', speaker:'최다은', speakerBio:'개발자 → 미술 유학생',             scentNotes:['재능','용기','전환'],       scentNote:'공대생이 미술을 배워 독일에 갔다.\n정답을 찾아서가 아니라, 해보고 싶어서.',                                   illustrationUrl:'', recommendFor:['재능과 흥미 사이에서 고민 중인 분','전공과 다른 길을 걷고 싶은 분','정답 없이 해보고 싶은 분'] },
-  { id:'t2-b', timeSlot:2, date:'4/28', time:'14:10–14:30', category:'번아웃·회복', title:'내 현실이 마음에 안 든다면',                speaker:'정유진', speakerBio:'PM · 요가 4년차',                 scentNotes:['몸','현실','받아들임'],     scentNote:'요가를 시작한 건 몸 때문이었는데,\n일하는 방식이 바뀌었다.',                                                 illustrationUrl:'', recommendFor:['일과 몸의 균형을 찾고 있는 분','번아웃이 아닌 다른 접근을 원하는 분','현실을 받아들이는 법을 배우고 싶은 분'] },
-  { id:'t2-c', timeSlot:2, date:'4/28', time:'14:10–14:30', category:'번아웃·회복', title:'사진 백만 장을 찍으면 번아웃이 낫는다고요',  speaker:'한승호', speakerBio:'회계사 → 스타트업 9년차',          scentNotes:['번아웃','셔터','회복'],     scentNote:'회계법인 4년, 스타트업 9년.\n무너지지 않은 게 아니라, 일어서는 법을 배웠다.',                                illustrationUrl:'', recommendFor:['번아웃을 겪어본 분','일 외의 무언가로 회복한 경험이 궁금한 분','오래 버텨온 자신에게 공감이 필요한 분'] },
-  { id:'t3-a', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'성장',        title:'창업 과정에서 만난 3가지 우연',             speaker:'오민준', speakerBio:'창업자 · 3회차',                  scentNotes:['우연','기회','용기'],       scentNote:"'우연'이라고 부르기엔\n너무 자주 왔다.",                                                                    illustrationUrl:'', recommendFor:['기회를 알아보는 눈을 기르고 싶은 분','창업이나 새로운 시작을 준비 중인 분','우연이 필연이 되는 경험이 궁금한 분'] },
-  { id:'t3-b', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'일·루틴',     title:'당신의 취미는 무엇인가요',                  speaker:'서지우', speakerBio:'영상 PD · 뮤지컬 마니아',          scentNotes:['집착','취미','삶의 밀도'], scentNote:'월 80만원을 뮤지컬에 쓴다.\n낭비인지 투자인지는, 들으면 판단해봐.',                                         illustrationUrl:'', recommendFor:['삶의 밀도를 높이고 싶은 분','취미에 진심인 사람의 이야기가 궁금한 분','일 외의 시간을 어떻게 쓸지 고민 중인 분'] },
-  { id:'t3-c', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'성장',        title:'배움이 즐거웠던 때가 있었다, 언젠가',       speaker:'임채원', speakerBio:'스파르타 튜터 · 학습 연구자',      scentNotes:['두려움','틀림','전환'],     scentNote:'배움이 두려운 게 아니라, 틀리는 게 두려웠다.\n그 차이를 아는 것만으로 공부 방식이 달라졌다.',                  illustrationUrl:'', recommendFor:['공부가 두렵게 느껴지는 분','배움의 방식을 바꾸고 싶은 분','틀리는 것에 예민한 분'] },
-  { id:'t4-a', timeSlot:4, date:'4/29', time:'14:10–14:30', category:'커리어',      title:'이직을 고민하는 건지, 도망치려는 건지',    speaker:'강태양', speakerBio:'커리어 컨설턴트 · 前 빅테크 PM',  scentNotes:['이직','도망','선택'],       scentNote:'세 번 이직하고 나서야 알았다.\n첫 번째는 도망이었고, 세 번째가 비로소 선택이었다는 걸.',                      illustrationUrl:'', recommendFor:['이직과 도망 사이에서 헷갈리는 분','커리어 방향을 객관적으로 점검하고 싶은 분','더 나은 선택을 하고 싶은 분'] },
-  { id:'t4-b', timeSlot:4, date:'4/29', time:'14:10–14:30', category:'일·루틴',     title:'바쁜데 왜 아무것도 안 한 것 같지',          speaker:'윤소희', speakerBio:'전략기획 팀장 · 시간관리 강연자', scentNotes:['바쁨','집중','루틴'],       scentNote:'회의 4개, 슬랙 수십 개, 퇴근 후 녹초.\n정작 중요한 건 하나도 진행되지 않았다.',                              illustrationUrl:'', recommendFor:['바쁘지만 성과가 없는 느낌인 분','루틴과 집중의 차이를 알고 싶은 분','회의와 업무 사이에서 지친 분'] },
-  { id:'t4-c', timeSlot:4, date:'4/29', time:'14:10–14:30', category:'정체성',      title:'남들 눈에 좋아 보이는 삶인데 왜 공허하지',  speaker:'문하린', speakerBio:'소셜미디어 크리에이터 · 전 마케터', scentNotes:['인정','공허','나다움'],     scentNote:'좋아요가 쌓일수록 내 안의 목소리는 작아졌다.\n외부의 인정이 존재 이유가 됐을 때, 아무것도 남지 않았다.',     illustrationUrl:'', recommendFor:['외부 인정에 의존하는 패턴이 있는 분','공허함의 원인을 찾고 싶은 분','나다움을 정의하고 싶은 분'] },
+  { id:'t1-a', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'지쳤던 이야기',
+    title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것', speaker:'김정훈', speakerBio:'그로스실',
+    topNote:'두려움', topNotePercent:'20%', middleNote:'시도', middleNotePercent:'50%', baseNote:'주도성', baseNotePercent:'30%',
+    scentNote:'팀스파르타에서의 한달,\n나는 절대\n적응할 수 없을 거라고 생각했다.',
+    color:'#2C5147', recommendFor:["'틀리면 어쩌지'란 생각을 먼저 하는 분",'잘하고 싶은데 시작 전부터 위축되는 분','부러운 동료는 나와 다른 종족이라 느끼는 분'] },
+  { id:'t1-b', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'헤맸던 이야기',
+    title:'저는 JYP 출신\n개발자입니다.', speaker:'문준호', speakerBio:'개발팀',
+    topNote:'흘러감', topNotePercent:'40%', middleNote:'질문', middleNotePercent:'40%', baseNote:'방향', baseNotePercent:'20%',
+    scentNote:'K-Pop이 좋아서 JYP에 들어갔다.\n분명 좋아하는 일이라 생각했다.',
+    color:'#D4891A', recommendFor:['내가 하는 일의 이유를 생각한 적 없는 분','좋아서 선택했는데 이유가 흐릿해진 분','방향은 있는데 맞는 길인지 헷갈리는 분'] },
+  { id:'t1-c', timeSlot:1, date:'4/28', time:'12:37–12:57', category:'겁났던 이야기',
+    title:'도둑도\n빈손으론 도망 안 칩니다.', speaker:'최윤석', speakerBio:'AX교육팀',
+    topNote:'불안', topNotePercent:'20%', middleNote:'도망', middleNotePercent:'50%', baseNote:'연결', baseNotePercent:'30%',
+    scentNote:'영상으로 월 400을 벌었다.\n더이상 재밌지도, 잘 할 수 있을 것\n같지도 않아서 그만뒀다.\n그게 내 첫 번째 도망이었다.',
+    color:'#C14460', recommendFor:['커리어 방향이 안 잡혀 막막한 분','지금 일이 맞는 선택인지 의심되는 분','나만 뒤처지는 것 같아 불안한 분'] },
+  { id:'t2-a', timeSlot:2, date:'4/28', time:'13:04–13:24', category:'헤맸던 이야기',
+    title:'트렌드에 치이고\nAI에 밀리는\n영상PD의 생존일기', slotTitle:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기', speaker:'이연기', speakerBio:'브랜드콘텐츠팀',
+    topNote:'무력감', topNotePercent:'50%', middleNote:'AI', middleNotePercent:'30%', baseNote:'도전', baseNotePercent:'20%',
+    scentNote:'AI, 트렌드.\n노력한다고 따라잡을 수 있는 속도는\n이미 지났다는 핑계를 댔다.',
+    color:'#C07040', recommendFor:['트렌드를 따라가야 한다는 압박을 느끼는 분','아직은 AI보단 검색이 편하신 분',"'준비되면 시작해야지'만 반복하는 분"] },
+  { id:'t2-b', timeSlot:2, date:'4/28', time:'13:04–13:24', category:'겁났던 이야기',
+    title:'이유도 모르고\n작아지고 있다면', speaker:'김지영', speakerBio:'CX팀',
+    topNote:'위축', topNotePercent:'35%', middleNote:'소진', middleNotePercent:'40%', baseNote:'주도권', baseNotePercent:'25%',
+    scentNote:'이유 있는 피곤함과\n이유 없는 피곤함을 분리하는 순간,\n내가 진짜\n신경 써야 할 것이 보였다.',
+    color:'#921E20', recommendFor:['종일 누군가의 감정을 받아내다 퇴근하는 분','친절함이 만만함이 되어버리는 분','잘못이 없는데 자꾸 먼저 작아지는 분'] },
+  { id:'t2-c', timeSlot:2, date:'4/28', time:'13:04–13:24', category:'지쳤던 이야기',
+    title:'내 안의 작고 뾰족한 자아를\n다루는 방법', speaker:'이다희', speakerBio:'제품실',
+    topNote:'커뮤니케이션', topNotePercent:'60%', middleNote:'퇴근길', middleNotePercent:'20%', baseNote:'회고', baseNotePercent:'20%',
+    scentNote:'회사 일과의 8할이 대화인데,\n말은 할수록 어렵고\n마음을 무겁게 했다.',
+    color:'#7F91AB', recommendFor:['바쁠수록 말이 거칠어지는 분','성숙하게 소통하고 싶은데 어려운 분','진심과 말이 다르게 닿아 고민인 분'] },
+  { id:'t3-a', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'겁났던 이야기',
+    title:'AI로 10분 만에\n채용 랜딩을 뽑는\n리크루터가 되기까지', slotTitle:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지', speaker:'배승아', speakerBio:'피플팀',
+    topNote:'FOMO', topNotePercent:'10%', middleNote:'AI', middleNotePercent:'30%', baseNote:'해냄', baseNotePercent:'60%',
+    scentNote:'방법을 몰랐다.\n어디까지 되는지도 몰랐다.\n앱스스크립트 창을 열었다가,\n외계어만 보고 닫았다.',
+    color:'#531229', recommendFor:['AI에게 뭘 시키면 좋을지 모르는 분','바이브코딩 해보라는데 뭘 할지 막막한 분','AI 사례는 봤는데 내 업무에 적용은 어려운 분'] },
+  { id:'t3-b', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'지쳤던 이야기',
+    title:'입사 한 달, 아무도 나에게\n일을 주지 않았다.', speaker:'박승현', speakerBio:'경영지원본부',
+    topNote:'확신', topNotePercent:'25%', middleNote:'대가', middleNotePercent:'50%', baseNote:'임계치', baseNotePercent:'25%',
+    scentNote:'한 달이 지나고,\n새벽 4시 퇴근이 일상이 되었다.\n남들이 하는 "적당히"라는 말을\n평생 이해할 수 없겠다고 생각했다.',
+    color:'#5E9E89', recommendFor:['몸의 신호를 의지로 버텨낸 적 있는 분','쉬면 불안하고 뒤처질 것 같은 분',"'적당히'가 게으른 핑계라 느끼는 분"] },
+  { id:'t3-c', timeSlot:3, date:'4/29', time:'12:37–12:57', category:'헤맸던 이야기',
+    title:'삼성, 마이크로소프트\n다 떠나고도 후회 없나고요?', speaker:'박영진', speakerBio:'AX솔루션팀',
+    topNote:'커리어', topNotePercent:'50%', middleNote:'고민', middleNotePercent:'10%', baseNote:'기준', baseNotePercent:'40%',
+    scentNote:'커리어를 선택할 때마다\n다들 날 말렸다.\n물어볼 사람도, 기준도 없었다.',
+    color:'#8F7A3A', recommendFor:['이 일이 커리어가 될지 모르겠는 분','열심히는 하는데 맞는 방향인지 확신 없는 분','롤모델도 가이드도 없어 기준이 막막한 분'] },
+  { id:'t4-a', timeSlot:4, date:'4/29', time:'13:04–13:24', category:'헤맸던 이야기',
+    title:'전재산 18만원에서 시작한\n인생 재무제표', speaker:'박상준', speakerBio:'게임팀',
+    topNote:'회피', topNotePercent:'25%', middleNote:'기록', middleNotePercent:'45%', baseNote:'기준', baseNotePercent:'30%',
+    scentNote:'130만원짜리 숙소에서 전재산이 담긴\n통장 잔고를 확인했다.\n달랑 18만원이었다.',
+    color:'#694124', recommendFor:['결혼·집·투자, 생각만 해도 아찔한 분','경제 유튜브를 봐도 내 기준을 모르겠는 분','현실 걱정은 커지는데 아직 대비는 못 한 분'] },
+  { id:'t4-b', timeSlot:4, date:'4/29', time:'13:04–13:24', category:'지쳤던 이야기',
+    title:'명랑한 오뚜기가 되겠다고\n결심한 이유', speaker:'나하나', speakerBio:'컬처팀',
+    topNote:'회복탄력성', topNotePercent:'50%', middleNote:'육아', middleNotePercent:'25%', baseNote:'명랑함', baseNotePercent:'25%',
+    scentNote:'집이 망했다는 소식을 듣고\n공원에서 하루종일 울었다.\n그러다 생각했다.\n망한 건 내가 아니지 않나..?',
+    color:'#4E7A96', recommendFor:['요즘 버겁고 무거운 고민 중인 분','세상이 가끔 날 억까한다고 느끼는 분','어차피 할 일, 기왕이면 즐겁게 하고 싶은 분'] },
 ];
 
 /* ── 초기화 ──────────────────────────────────────────────── */
@@ -117,17 +160,22 @@ function renderTimeSections() {
 function renderCard(lecture, cardState = 'default') {
   const selectedClass  = cardState === 'selected' ? ' card--selected' : '';
   const siblingClass   = cardState === 'sibling'  ? ' card--sibling'  : '';
-  const auraGradient   = getAuraGradient(lecture.category);
-  const notes          = lecture.scentNotes || [];
-  const noteLabels     = ['Top', 'Heart', 'Base'];
-  const notePcts       = ['43%', '35%', '22%'];
+  const auraGradient   = getAuraGradient(lecture.color);
 
-  const noteRows = notes.slice(0, 3).map((n, i) => `
+  const noteRows = [
+    { label: 'TOP',    value: lecture.topNote,    pct: lecture.topNotePercent },
+    { label: 'MIDDLE', value: lecture.middleNote,  pct: lecture.middleNotePercent },
+    { label: 'BASE',   value: lecture.baseNote,    pct: lecture.baseNotePercent },
+  ].map(n => `
     <div class="card__note-row">
-      <span class="card__note-label">${noteLabels[i]}</span>
-      <span class="card__note-value">${n}</span>
-      <span class="card__note-pct">${notePcts[i]}</span>
+      <span class="card__note-label">${n.label}</span>
+      <span class="card__note-value">${n.value}</span>
+      <span class="card__note-pct">${n.pct}</span>
     </div>`).join('');
+
+  // 날짜 포맷: "4/28" → "4월 28일 (화)"
+  const dayNames = { '4/28': '4월 28일 (화)', '4/29': '4월 29일 (수)' };
+  const dateFormatted = dayNames[lecture.date] || lecture.date;
 
   return `
     <div class="card${selectedClass}${siblingClass}"
@@ -139,23 +187,25 @@ function renderCard(lecture, cardState = 'default') {
 
       <div class="card__header">
         <span class="card__brand">Svashi · Vol. III</span>
-        <span class="card__cat">${lecture.category}</span>
+        <img class="card__brand-logo" src="15min-logo.png" alt="15MIN">
       </div>
 
       <div class="card__aura">
         <div class="card__aura-blob" style="background:${auraGradient}"></div>
-        <img class="card__aura-logo" src="스바시로고.png" alt="">
         <p class="card__hook">${lecture.title}</p>
       </div>
 
       <div class="card__bottom">
+        <div class="card__sub-header">
+          <span class="card__time-vol">Scent Note</span>
+          <span class="card__cat">${lecture.category}</span>
+        </div>
         <div class="card__rule"></div>
         <div class="card__footer">
           <div class="card__note-stack">${noteRows}</div>
-          <div class="card__time">
-            <span class="card__time-date">${lecture.date} · ${lecture.timeSlot}타임</span>
-            <span class="card__time-range">${lecture.time}</span>
-            <span class="card__time-vol">Scent Note</span>
+          <div class="card__meta">
+            <span class="card__time-date">${dateFormatted} ${lecture.timeSlot}타임</span>
+            <span class="card__speaker-line">${lecture.speaker} <span class="card__speaker-bio">${lecture.speakerBio}</span></span>
           </div>
         </div>
       </div>
@@ -192,12 +242,24 @@ function renderBottomSheet(animatingSlot = null) {
   // 상태 메시지 (플레이스홀더로 통합)
   if (statusEl) statusEl.textContent = '';
 
-  // 완료 버튼
-  if (btnComplete) {
-    if (count >= 1) {
-      btnComplete.classList.remove('btn-complete--disabled');
+  // 버튼 상태
+  const btnExplore = document.getElementById('btnExplore');
+  if (btnComplete && btnExplore) {
+    if (count >= 4) {
+      // 4개 완성 → 탐색 숨기고 완성하기 승격
+      btnExplore.classList.add('btn-explore--hidden');
+      btnComplete.classList.remove('btn-complete-text--disabled');
+      btnComplete.classList.add('btn-complete-text--promoted');
+    } else if (count >= 1) {
+      // 1~3개 → 둘 다 표시
+      btnExplore.classList.remove('btn-explore--hidden');
+      btnComplete.classList.remove('btn-complete-text--disabled');
+      btnComplete.classList.remove('btn-complete-text--promoted');
     } else {
-      btnComplete.classList.add('btn-complete--disabled');
+      // 0개 → 탐색만 표시, 완성 비활성
+      btnExplore.classList.remove('btn-explore--hidden');
+      btnComplete.classList.add('btn-complete-text--disabled');
+      btnComplete.classList.remove('btn-complete-text--promoted');
     }
   }
 
@@ -219,15 +281,15 @@ function renderBottomSheet(animatingSlot = null) {
     const lec = getLectureById(selId);
     if (!lec) return '';
     const coloredClass = slot === animatingSlot ? '' : 'slot__thumb--colored';
-    const rgb = getAuraRGB(lec.category);
-    const slotColor = `rgba(${rgb},0.28)`;
-    const slotColorStrong = `rgb(${rgb})`;
+    const rgb = hexToRgb(lec.color);
+    const slotColor = `rgba(${rgb},0.22)`;
+    const slotColorStrong = lec.color;
     return `
       <div class="slot" data-slot="${slot}">
         <div class="slot__thumb ${coloredClass}" style="--slot-color:${slotColor};--slot-color-strong:${slotColorStrong}"><span>${slot}</span></div>
         <div class="slot__inner">
           <span class="slot__time-label">${slotLabel}</span>
-          <p class="slot__title">${lec.title}</p>
+          <p class="slot__title">${(lec.slotTitle || lec.title)}</p>
         </div>
         <button class="slot__remove" data-remove-slot="${slot}" aria-label="${lec.title} 제거">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -263,7 +325,7 @@ function renderModal(lectureId) {
   }
 
   const lectureNo = String(state.lectures.indexOf(lec) + 1).padStart(2, '0');
-  const notes = (lec.scentNotes || []).join(' · ');
+  const notes = `${lec.topNote} ${lec.topNotePercent} · ${lec.middleNote} ${lec.middleNotePercent} · ${lec.baseNote} ${lec.baseNotePercent}`;
   const recommendFor = lec.recommendFor || [];
   const fitSection = recommendFor.length > 0
     ? `<div class="modal__fit-area">
@@ -618,7 +680,7 @@ function closeSignPage() {
   document.getElementById('signPage')?.classList.remove('sign-page--active');
 }
 
-async function submitWithEmail(email) {
+async function submitWithEmail(email, maxRetries = 3) {
   const payload = {
     email,
     t1: state.selections[1]
@@ -637,15 +699,29 @@ async function submitWithEmail(email) {
     count: getSelectedCount(),
   };
 
-  const res = await fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  });
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-  if (!res.ok) throw new Error('network_error');
-  const result = await res.json();
-  if (!result.success) throw new Error(result.error || 'submit_failed');
-  return result;
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (!res.ok) throw new Error('network_error');
+      const result = await res.json();
+      if (!result.success) throw new Error(result.error || 'submit_failed');
+      return result;
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      const baseDelay = 1000 * Math.pow(2, attempt);
+      const jitter = Math.random() * 1000;
+      await new Promise((r) => setTimeout(r, baseDelay + jitter));
+    }
+  }
 }
 
 /* ── Swiper 초기화 & 갱신 ────────────────────────────────── */
@@ -688,7 +764,7 @@ function bindEvents() {
   });
 
   // ── 카드 클릭 (이벤트 위임)
-  document.addEventListener('click', (e) => {
+  document.addEventListener('click', async (e) => {
     // 바텀시트 peek 클릭 → 열기
     const sheet = document.getElementById('bottomSheet');
     if (e.target.closest('#bottomSheetHandle') || e.target.closest('.bottom-sheet__header')) {
@@ -752,9 +828,24 @@ function bindEvents() {
       return;
     }
 
+    // 탐색 버튼 → 바텀시트 닫고 다음 빈 타임으로 스크롤
+    if (e.target.closest('#btnExplore')) {
+      closeBottomSheet();
+      const nextEmpty = [1,2,3,4].find(s => !state.selections[s]);
+      if (nextEmpty) {
+        const section = document.querySelector(`.time-section[data-slot="${nextEmpty}"]`);
+        if (section) {
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 360);
+        }
+      }
+      return;
+    }
+
     // 완료 버튼
     if (e.target.closest('#btnComplete')) {
-      if (!e.target.closest('.btn-complete--disabled')) {
+      if (!e.target.closest('.btn-complete-text--disabled')) {
         openRecipePage();
       }
       return;
@@ -789,23 +880,30 @@ function bindEvents() {
       btn.disabled = true;
       state.email = email;
 
-      // 즉시 완료 화면으로 전환 (Optimistic UI)
-      const signPage = document.getElementById('signPage');
-      const donePage = document.getElementById('donePage');
-      signPage?.classList.add('sign-page--exit');
-      setTimeout(() => {
-        renderDonePage();
-        setTimeout(() => {
-          requestAnimationFrame(() => {
-            donePage?.classList.add('done-page--active');
-          });
-        }, 200);
-      }, 100);
+      // 제출 진행 — 로딩 상태 표시
+      btn.textContent = '제출 중…';
 
-      // 백그라운드에서 실제 제출
-      submitWithEmail(email).catch(() => {
-        console.error('[svashi] 서명 제출 실패 — email:', email);
-      });
+      try {
+        await submitWithEmail(email);
+
+        // 성공 시 완료 화면 전환
+        const signPage = document.getElementById('signPage');
+        const donePage = document.getElementById('donePage');
+        signPage?.classList.add('sign-page--exit');
+        setTimeout(() => {
+          renderDonePage();
+          setTimeout(() => {
+            requestAnimationFrame(() => {
+              donePage?.classList.add('done-page--active');
+            });
+          }, 200);
+        }, 100);
+      } catch (err) {
+        console.error('[svashi] 서명 제출 실패 — email:', email, err);
+        btn.disabled = false;
+        btn.textContent = '서명하기';
+        if (errorEl) errorEl.textContent = '제출에 실패했어요. 다시 시도해주세요.';
+      }
       return;
     }
 
