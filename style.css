@@ -1565,9 +1565,9 @@ ul, ol {
   letter-spacing: 0.18em;
   color: var(--muted);
   text-transform: uppercase;
-  margin-bottom: 28px;
+  margin-bottom: 16px;
   opacity: 0;
-  animation: doneItemFadeUp 500ms 300ms var(--ease-out-smooth) forwards;
+  animation: doneItemFadeUp 800ms 400ms var(--ease-out-smooth) forwards;
 }
 
 /* ── 향수 레이블 래퍼 ── */
@@ -1575,6 +1575,8 @@ ul, ol {
   position: relative;
   width: 100%;
   max-width: 360px;
+  opacity: 0;
+  animation: doneItemFadeUp 900ms 1200ms var(--ease-out-smooth) forwards;
 }
 
 .done-label {
@@ -1664,18 +1666,18 @@ ul, ol {
 .done-label__note:last-child { border-bottom: none; }
 
 @keyframes doneTypeIn {
-  from { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes doneItemFadeUp {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.done-label__note:nth-child(1) { animation: doneTypeIn 400ms 800ms  var(--ease-out-smooth) forwards; }
-.done-label__note:nth-child(2) { animation: doneTypeIn 400ms 950ms  var(--ease-out-smooth) forwards; }
-.done-label__note:nth-child(3) { animation: doneTypeIn 400ms 1100ms var(--ease-out-smooth) forwards; }
-.done-label__note:nth-child(4) { animation: doneTypeIn 400ms 1250ms var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(1) { animation: doneTypeIn 700ms 1600ms var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(2) { animation: doneTypeIn 700ms 1900ms var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(3) { animation: doneTypeIn 700ms 2200ms var(--ease-out-smooth) forwards; }
+.done-label__note:nth-child(4) { animation: doneTypeIn 700ms 2500ms var(--ease-out-smooth) forwards; }
 
 .done-label__note-meta {
   font-family: 'Courier Prime', 'Courier New', monospace;
@@ -1726,7 +1728,7 @@ ul, ol {
   align-items: flex-end;
   justify-content: space-between;
   opacity: 0;
-  animation: doneItemFadeUp 500ms 1400ms var(--ease-out-smooth) forwards;
+  animation: doneItemFadeUp 700ms 2800ms var(--ease-out-smooth) forwards;
 }
 
 .done-label__owner {
@@ -1759,10 +1761,10 @@ ul, ol {
 
 /* ── 완성 카피 ── */
 .done-caption {
-  margin-top: 44px;
+  margin-bottom: 32px;
   text-align: center;
   opacity: 0;
-  animation: doneItemFadeUp 600ms 1650ms var(--ease-out-smooth) forwards;
+  animation: doneItemFadeUp 800ms 900ms var(--ease-out-smooth) forwards;
 }
 
 .done-caption__main {
@@ -1789,24 +1791,26 @@ ul, ol {
   line-height: 1.7;
 }
 
-.done-save-btn {
-  display: block;
-  margin: 16px auto 0;
-  padding: 10px 24px;
-  border-radius: 6px;
-  background: none;
-  border: 1px solid rgba(181,164,168,0.4);
+.done-notice {
+  text-align: center;
+  margin-top: 24px;
+  opacity: 0;
+  animation: doneItemFadeUp 700ms 3200ms var(--ease-out-smooth) forwards;
+}
+
+.done-notice__main {
   font-family: var(--font-base);
   font-size: 12px;
   font-weight: 400;
-  color: #470024;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: opacity var(--duration-fast) ease;
+  color: rgba(181,164,168,1);
+  margin-bottom: 4px;
 }
 
-.done-save-btn:active {
-  opacity: 0.6;
+.done-notice__sub {
+  font-family: var(--font-base);
+  font-size: 14px;
+  font-weight: 500;
+  color: #470024;
 }
 
 /* ── 13. 담기 애니메이션 ──────────────────────────────── */

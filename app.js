@@ -463,6 +463,10 @@ function renderDonePage() {
 
   inner.innerHTML = `
     <p class="done-eyebrow">Note Composition Complete</p>
+    <div class="done-caption">
+      <span class="done-caption__main">조향이 완성됐어요.</span>
+      <span class="done-caption__sub">4월 28–29일, 스바시에서 만나요.</span>
+    </div>
     <div class="done-label-wrap">
       <div class="done-label">
         <div class="done-label__brand">
@@ -488,10 +492,9 @@ function renderDonePage() {
         </div>
       </div>
     </div>
-    <button class="done-save-btn" id="btnSaveNote">나의 조향 노트 저장</button>
-    <div class="done-caption">
-      <span class="done-caption__main">조향이 완성됐어요.</span>
-      <span class="done-caption__sub">4월 28–29일, 스바시에서 만나요.</span>
+    <div class="done-notice">
+      <p class="done-notice__main">선택한 15분들이 모두 신청되었어요.</p>
+      <p class="done-notice__sub">배정 결과는 4월 27일(월)까지 안내드릴게요.</p>
     </div>`;
 }
 
@@ -965,44 +968,6 @@ function bindEvents() {
         btn.disabled = false;
         btn.textContent = '서명하기';
         if (errorEl) errorEl.textContent = '제출에 실패했어요. 다시 시도해주세요.';
-      }
-      return;
-    }
-
-    // 이미지 저장 버튼
-    if (e.target.closest('#btnSaveNote')) {
-      const label = document.querySelector('.done-label-wrap');
-      if (label && typeof html2canvas !== 'undefined') {
-        const btn = document.getElementById('btnSaveNote');
-        btn.textContent = '저장 중...';
-        btn.disabled = true;
-        // 애니메이션 opacity:0 요소들을 강제 표시
-        const hidden = label.querySelectorAll('.done-label__note, .done-label__footer');
-        hidden.forEach(el => { el.style.opacity = '1'; el.style.animation = 'none'; });
-        html2canvas(label, {
-          backgroundColor: '#FFFCF6',
-          scale: 3,
-          useCORS: true,
-        }).then(canvas => {
-          // 애니메이션 없이 표시 상태 유지
-          hidden.forEach(el => { el.style.opacity = '1'; el.style.animation = 'none'; });
-          const link = document.createElement('a');
-          const memberName = (cachedMembers && state.email)
-            ? (cachedMembers.find(m => m.email === state.email)?.name || '').replace(/[A-Z]$/, '')
-            : '';
-          const fileName = memberName
-            ? `${memberName}_스바시 조향노트.png`
-            : '스바시 조향노트.png';
-          link.download = fileName;
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-          btn.textContent = '이미지로 저장하기';
-          btn.disabled = false;
-        }).catch(() => {
-          hidden.forEach(el => { el.style.opacity = '1'; el.style.animation = 'none'; });
-          btn.textContent = '나의 조향 노트 저장';
-          btn.disabled = false;
-        });
       }
       return;
     }
