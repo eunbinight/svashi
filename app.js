@@ -6,6 +6,13 @@
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcxi0yqBvYvilnbmg1FDch3PQLgz_V_2bSmDlbEoCuP5cF5RQlH-JXrqMQBLT8u_Ws/exec';
 
 /* ── 전역 state ─────────────────────────────────────────── */
+/* ── 오픈 제어 (수동) ────────────────────────────────────── */
+const IS_OPEN = false; // ← 오픈 시 true로 변경 후 git push
+
+function isBeforeOpen() {
+  return !IS_OPEN;
+}
+
 const state = {
   selections: {
     1: null,
@@ -366,7 +373,10 @@ function renderModal(lectureId) {
           <span class="modal__speaker-bio">${lec.speakerBio}</span>
         </div>
       </div>
-      <button class="${btnClass}" data-pick="${lectureId}">${btnText}</button>
+      ${isBeforeOpen()
+        ? `<div class="modal__open-notice">4/16(목) 오후 1:50 신청 오픈</div>`
+        : `<button class="${btnClass}" data-pick="${lectureId}">${btnText}</button>`
+      }
     </div>`;
 }
 
@@ -894,6 +904,7 @@ function bindEvents() {
     // 담기 버튼 클릭
     const pickBtn = e.target.closest('[data-pick]');
     if (pickBtn) {
+      if (isBeforeOpen()) return;
       const id = pickBtn.dataset.pick;
       if (id) handlePickClick(id);
       return;

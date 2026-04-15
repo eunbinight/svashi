@@ -695,6 +695,19 @@ ul, ol {
   pointer-events: none;
 }
 
+/* ── 오픈 전 안내 ── */
+.modal__open-notice {
+  text-align: center;
+  padding: 14px 20px;
+  margin: 0 20px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
 .btn-pick--selected {
   background-color: transparent;
   color: var(--fg);
