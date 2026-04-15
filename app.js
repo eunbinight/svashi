@@ -283,13 +283,14 @@ function renderBottomSheet(animatingSlot = null) {
     const selId = state.selections[slot];
     const slotDateMap = { 1: '4/28', 2: '4/28', 3: '4/29', 4: '4/29' };
     const slotLabel = `${slotDateMap[slot]} · ${slot}타임`;
+    const isPC = window.matchMedia('(min-width: 1024px)').matches;
     if (!selId) {
       return `
         <div class="slot slot--empty" data-slot="${slot}">
           <div class="slot__thumb"><span>${slot}</span></div>
           <div class="slot__inner">
             <span class="slot__time-label">${slotLabel}</span>
-            <p class="slot__empty-hint">아직 비어있는 향</p>
+            ${isPC ? '<p class="slot__empty-hint">아직 비어있는 향</p>' : ''}
           </div>
         </div>`;
     }
