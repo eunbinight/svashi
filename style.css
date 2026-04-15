@@ -90,6 +90,11 @@ ul, ol {
   height: 52px;
 }
 
+/* 모바일에서 PC 토글 버튼 숨김 */
+.nav-sheet-toggle {
+  display: none;
+}
+
 .site-nav__logo {
   line-height: 1;
   user-select: none;
@@ -930,6 +935,32 @@ ul, ol {
   font-size: 12px;
   font-weight: 500;
   color: var(--muted);
+}
+
+/* ── 프로그레스 바 ──────────────────────────────────────────── */
+.sheet-progress {
+  height: 3px;
+  background: var(--border);
+  margin: 8px var(--page-h-pad) 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.sheet-progress__fill {
+  height: 100%;
+  width: 0;
+  background: rgba(71, 0, 36, 0.25);
+  border-radius: 2px;
+  transition: width 500ms var(--ease-out-smooth);
+}
+
+/* ── 빈 슬롯 유도 문구 ──────────────────────────────────────── */
+.slot__empty-hint {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--border);
+  margin: 0;
+  letter-spacing: 0.02em;
 }
 
 /* ── 노트 플레이스홀더 ─────────────────────────────────────── */
@@ -1874,5 +1905,253 @@ ul, ol {
 @media (min-width: 640px) {
   body {
     background-color: #E4E0DB;
+  }
+}
+
+/* ── 17. PC 뷰 (768px+) ─────────────────────────────────── */
+@media (min-width: 1024px) {
+
+  /* ── 아이패드 프레임 제거 ── */
+  body {
+    background-color: var(--bg);
+  }
+
+  .page {
+    max-width: 1100px;
+    padding-left: 48px;
+    padding-right: 48px;
+    box-shadow: none;
+  }
+
+  .site-nav {
+    max-width: 100%;
+    padding: 0 48px;
+  }
+
+  /* 로고 + 서브타이틀을 왼쪽에 묶기 */
+  .site-nav {
+    gap: 12px;
+  }
+
+  .site-nav__sub {
+    margin-right: auto;
+    font-size: 11px;
+  }
+
+  /* ── 네비 토글 버튼 ── */
+  .nav-sheet-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: none;
+    border: 1.5px solid var(--accent);
+    border-radius: 20px;
+    font-family: var(--font-base);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+    white-space: nowrap;
+  }
+
+  .nav-sheet-toggle:hover {
+    background: var(--accent);
+    color: #FFFCF6;
+  }
+
+  .nav-sheet-toggle__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #FFFCF6;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .nav-sheet-toggle:hover .nav-sheet-toggle__badge {
+    background: #FFFCF6;
+    color: var(--accent);
+  }
+
+  /* ── 카드: 비율 + 타이포 스케일업 ── */
+  .card {
+    aspect-ratio: 3 / 4;
+  }
+
+  .day-label {
+    font-size: 14px;
+    padding-top: 44px;
+  }
+
+  .day-label__date {
+    font-size: 22px;
+  }
+
+  .time-section__slot {
+    font-size: 13px;
+  }
+
+  .card__title {
+    font-size: 22px;
+  }
+
+  .card__info-label,
+  .card__info-value {
+    font-size: 11px;
+  }
+
+  /* ── 모달: 중앙 전환 ── */
+  .modal-overlay {
+    align-items: center;
+    padding: 40px;
+  }
+
+  .modal {
+    max-width: 480px;
+    border-radius: 16px;
+    max-height: 80vh;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform var(--duration-modal) var(--ease-out-smooth),
+                opacity 250ms ease;
+  }
+
+  .modal--open {
+    animation: none;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ── 바텀시트 → 우측 사이드 패널 ── */
+  .bottom-sheet {
+    left: auto;
+    right: 0;
+    top: 52px;
+    bottom: 0;
+    width: 380px;
+    max-width: 380px;
+    max-height: none;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+    border-top: none;
+    border-left: 1px solid rgba(181,164,168,0.2);
+    transform: translateX(100%);
+    box-shadow: -4px 0 24px rgba(28, 27, 24, 0.06);
+  }
+
+  .bottom-sheet--open {
+    transform: translateX(0);
+  }
+
+  .bottom-sheet__handle-bar {
+    display: none;
+  }
+
+  /* 뱃지 → 닫기 버튼 (원 제거) */
+  .sheet-badge {
+    font-size: 0;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sheet-badge::after {
+    content: '\00d7';
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .bottom-sheet__body {
+    flex: 1;
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .bottom-sheet__actions {
+    margin-top: 24px;
+    flex-shrink: 0;
+  }
+
+  /* 상단 여백 조정 */
+  .bottom-sheet__header {
+    padding: 20px 20px 12px;
+  }
+
+  .sheet-progress {
+    margin: 8px var(--page-h-pad) 0;
+  }
+
+  .bottom-sheet__body {
+    flex: 0 1 auto;
+  }
+
+  .sheet-backdrop {
+    display: none;
+  }
+
+  /* ── 교체 팝업: 중앙 ── */
+  .replace-popup {
+    max-width: 400px;
+    bottom: auto;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) translateY(16px);
+    z-index: 101;
+  }
+
+  .replace-popup--active {
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  /* ── 레시피/서명/완료: max-width 확장 ── */
+  .recipe-page__inner {
+    max-width: 520px;
+  }
+
+  .sign-page__inner {
+    max-width: 520px;
+  }
+
+  .done-page__inner {
+    max-width: 520px;
+  }
+
+  .btn-back {
+    left: max(var(--page-h-pad), calc((100% - 520px) / 2 + var(--page-h-pad)));
+  }
+}
+
+/* ── 카드 hover (PC 전용) ── */
+@media (hover: hover) and (min-width: 1024px) {
+  .card {
+    transition: opacity 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 24px rgba(28, 27, 24, 0.12),
+      0 0 0 0.5px rgba(28,27,24,0.10);
+  }
+
+  .card--sibling {
+    transform: none;
   }
 }

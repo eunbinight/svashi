@@ -24,6 +24,7 @@ const state = {
     3: true,
     4: true,
   },
+  sheetManualOpen: false,
 };
 
 /* ── 유틸 ────────────────────────────────────────────────── */
@@ -232,6 +233,12 @@ function renderBottomSheet(animatingSlot = null) {
   // 뱃지
   if (sheetBadge) sheetBadge.textContent = count;
   if (sheetCount) sheetCount.textContent = `${count} / 4`;
+  // PC 네비 토글 뱃지 동기화
+  const navBadge = document.querySelector('.nav-sheet-toggle__badge');
+  if (navBadge) navBadge.textContent = count;
+  // 프로그레스 바
+  const progressFill = document.getElementById('sheetProgressFill');
+  if (progressFill) progressFill.style.width = `${(count / 4) * 100}%`;
 
   // 노트 플레이스홀더: 항상 표시, 메시지만 업데이트
   if (placeholderEl) {
@@ -275,6 +282,7 @@ function renderBottomSheet(animatingSlot = null) {
           <div class="slot__thumb"><span>${slot}</span></div>
           <div class="slot__inner">
             <span class="slot__time-label">${slotLabel}</span>
+            <p class="slot__empty-hint">아직 비어있는 향</p>
           </div>
         </div>`;
     }
@@ -734,7 +742,7 @@ async function submitWithEmail(email, maxRetries = 3) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      const timeoutId = setTimeout(() => controller.abort(), 35000);
 
       const res = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
@@ -767,6 +775,12 @@ function initSwipers() {
       spaceBetween: 12,
       centeredSlides: false,
       grabCursor: true,
+      breakpoints: {
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 16,
+        }
+      }
     });
   });
 }
@@ -783,7 +797,46 @@ function refreshSwipers() {
 document.addEventListener('DOMContentLoaded', () => {
   loadLectures();
   bindEvents();
+  setupPcSheetToggle();
 });
+
+/* ── PC: 네비 토글 버튼 ──────────────────────────────────── */
+function setupPcSheetToggle() {
+  const mq = window.matchMedia('(min-width: 1024px)');
+
+  function create() {
+    if (document.querySelector('.nav-sheet-toggle')) return;
+    const nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    const btn = document.createElement('button');
+    btn.className = 'nav-sheet-toggle';
+    btn.innerHTML = '나의 조향 노트 <span class="nav-sheet-toggle__badge">0</span>';
+    btn.addEventListener('click', () => {
+      const sheet = document.getElementById('bottomSheet');
+      if (!sheet) return;
+      if (sheet.classList.contains('bottom-sheet--open')) {
+        closeBottomSheet();
+        state.sheetManualOpen = false;
+      } else {
+        openBottomSheet();
+        state.sheetManualOpen = true;
+      }
+    });
+    nav.appendChild(btn);
+  }
+
+  function remove() {
+    const btn = document.querySelector('.nav-sheet-toggle');
+    if (btn) btn.remove();
+  }
+
+  function handleChange(e) {
+    if (e.matches) { create(); } else { remove(); }
+  }
+
+  mq.addEventListener('change', handleChange);
+  if (mq.matches) create();
+}
 
 function bindEvents() {
   // ── 브라우저/앱 뒤로가기
@@ -799,10 +852,28 @@ function bindEvents() {
   document.addEventListener('click', async (e) => {
     // 바텀시트 peek 클릭 → 열기
     const sheet = document.getElementById('bottomSheet');
+    // PC: 뱃지(X) 클릭 → 닫기
+    if (e.target.closest('.sheet-badge') && window.matchMedia('(min-width: 1024px)').matches) {
+      if (sheet) { closeBottomSheet(); state.sheetManualOpen = false; }
+      return;
+    }
     if (e.target.closest('#bottomSheetHandle') || e.target.closest('.bottom-sheet__header')) {
-      if (sheet && !sheet.classList.contains('bottom-sheet--open')) {
+      if (sheet && sheet.classList.contains('bottom-sheet--open')) {
+        closeBottomSheet();
+      } else if (sheet) {
         openBottomSheet();
-        return;
+      }
+      return;
+    }
+
+    // PC: 패널 바깥 클릭 → 수동 열기된 패널만 닫기
+    if (window.matchMedia('(min-width: 1024px)').matches && state.sheetManualOpen) {
+      const sheet = document.getElementById('bottomSheet');
+      if (sheet && sheet.classList.contains('bottom-sheet--open')
+          && !e.target.closest('.bottom-sheet')
+          && !e.target.closest('.nav-sheet-toggle')) {
+        closeBottomSheet();
+        state.sheetManualOpen = false;
       }
     }
 
