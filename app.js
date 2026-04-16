@@ -7,7 +7,7 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcxi0yqBvYviln
 
 /* ── 전역 state ─────────────────────────────────────────── */
 /* ── 오픈 제어 (수동) ────────────────────────────────────── */
-const IS_OPEN = false; // ← 오픈 시 true로 변경 후 git push
+const IS_OPEN = true; // ← 오픈 시 true로 변경 후 git push
 
 function isBeforeOpen() {
   return !IS_OPEN;
