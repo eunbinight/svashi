@@ -212,7 +212,7 @@ function renderCard(lecture, cardState = 'default') {
         <div class="card__footer">
           <div class="card__note-stack">${noteRows}</div>
           <div class="card__meta">
-            <span class="card__time-date">${dateFormatted} ${lecture.timeSlot}타임</span>
+            <span class="card__time-date">${dateFormatted} ${lecture.timeSlot <= 2 ? lecture.timeSlot : lecture.timeSlot - 2}타임</span>
             <span class="card__speaker-line">${lecture.speaker} <span class="card__speaker-bio">${lecture.speakerBio}</span></span>
           </div>
         </div>
@@ -282,7 +282,8 @@ function renderBottomSheet(animatingSlot = null) {
   slotsEl.innerHTML = [1, 2, 3, 4].map((slot) => {
     const selId = state.selections[slot];
     const slotDateMap = { 1: '4/28', 2: '4/28', 3: '4/29', 4: '4/29' };
-    const slotLabel = `${slotDateMap[slot]} · ${slot}타임`;
+    const displaySlot = slot <= 2 ? slot : slot - 2;
+    const slotLabel = `${slotDateMap[slot]} · ${displaySlot}타임`;
     const isPC = window.matchMedia('(min-width: 1024px)').matches;
     if (!selId) {
       return `
