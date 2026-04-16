@@ -1015,7 +1015,7 @@ function bindEvents() {
       state.email = selectedMemberEmail;
 
       // 제출 진행 — 로딩 상태 표시
-      btn.textContent = '제출 중…';
+      btn.textContent = '조향 레시피를 기록하고 있어요…';
 
       try {
         await submitWithEmail(email);
