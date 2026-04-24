@@ -22,6 +22,11 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'byunggon.cha@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
   'chohui.kim@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
@@ -49,6 +54,12 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'ds.rhee@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
   'dw.han@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
@@ -69,6 +80,26 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'ej.lee@teamsparta.co': [
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
+  'es.cha@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'es.lee@teamsparta.co': [
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
+  ],
+  'es.park@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
   'gc.yang@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
@@ -80,6 +111,9 @@ const ASSIGNMENTS = {
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'gw.wang@teamsparta.co': [
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
   'gyuhong.choi@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
@@ -112,11 +146,25 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'hk.an@teamsparta.co': [
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
+  ],
   'hm.kim@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
+  'hn.cho@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
+  'hn.kim@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
   ],
   'hr.park@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
@@ -175,11 +223,22 @@ const ASSIGNMENTS = {
   'is.choi@teamsparta.co': [
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'j.kwak@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
   'j.yoon@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'jaejeong.kim@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
   ],
   'jb.choi@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
@@ -240,6 +299,12 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'jhyeon.kim@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
   'jiah.shin@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
@@ -273,6 +338,11 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'jk.hwang@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
   'jm.an@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
@@ -283,6 +353,22 @@ const ASSIGNMENTS = {
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
     { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
+  'jongwoo.shin@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'joohee.park@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
+  'joonyoung.heo@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' }
   ],
   'js.hong@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
@@ -318,6 +404,12 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'jw.kang@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
   'jw.lee@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
@@ -329,6 +421,14 @@ const ASSIGNMENTS = {
     { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
     { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'jy.jang@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' }
+  ],
+  'jy.kim@teamsparta.co': [
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
   'jy.yoon@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
@@ -414,6 +514,11 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'sangjun.park@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' }
+  ],
   'sangmin.jeon@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
@@ -435,6 +540,12 @@ const ASSIGNMENTS = {
   'seokhwan.ko@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
+  ],
+  'seung.hb@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
   'seungyeon.lee@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
@@ -459,7 +570,25 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'sh.lee@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
   'sh.yeo@teamsparta.co': [
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'si.choi@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'si.jin@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
@@ -523,9 +652,28 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'sr.han@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'sr.park@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'st.oh@teamsparta.co': [
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
+  ],
   'sungjong.lee@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
+  ],
+  'sunhoon.kim@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
   ],
   'suyeong.kim@teamsparta.co': [
@@ -540,6 +688,10 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'sw.park@teamsparta.co': [
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
+    { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
   'sy.chae@teamsparta.co': [
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
   ],
@@ -549,10 +701,21 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'sy.kim@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' }
+  ],
   'sy.pyun@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
     { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'tr.chae@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'트렌드에 치이고 AI에 밀리는\n영상PD의 생존일기',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
   'uj.choe@teamsparta.co': [
@@ -567,6 +730,12 @@ const ASSIGNMENTS = {
   'wy.heo@teamsparta.co': [
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
+  ],
+  'yejin.kim@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
+    { date:'4/29',timeSlot:3,time:'13:04',title:'AI로 10분 만에 채용 랜딩을 뽑는\n리크루터가 되기까지',location:'운동장' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
   'yeonsu.lee@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
@@ -584,15 +753,32 @@ const ASSIGNMENTS = {
     { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
   ],
+  'yj.choi@teamsparta.co': [
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' }
+  ],
   'yj.dan@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
     { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'14:10',title:'전재산 18만원에서 시작한\n인생 재무제표',location:'창의관' }
   ],
+  'yj.jang@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' },
+    { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'yj.jeong@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'한 번도 계획대로 온 적 없는\n커리어가 알려준 것',location:'거실' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'내 안의 작고 뾰족한 자아를\n다루는 방법',location:'거실' }
+  ],
   'yj.oh@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'저는 JYP 출신\n개발자입니다.',location:'운동장' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
+  ],
+  'yj.sung@teamsparta.co': [
+    { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
+    { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
+    { date:'4/29',timeSlot:3,time:'12:37',title:'입사 한 달,\n아무도 나에게 일을 주지 않았다.',location:'창의관' }
   ],
   'yj.yoon@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
@@ -608,6 +794,9 @@ const ASSIGNMENTS = {
     { date:'4/28',timeSlot:2,time:'13:04',title:'이유도 모르고\n작아지고 있다면',location:'창의관' },
     { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' },
     { date:'4/29',timeSlot:4,time:'13:04',title:'명랑한 오뚜기가 되겠다고\n결심한 이유',location:'거실' }
+  ],
+  'yongjae.kim@teamsparta.co': [
+    { date:'4/29',timeSlot:3,time:'12:37',title:'삼성, 마이크로소프트\n다 떠나고도 후회 없냐고요?',location:'거실' }
   ],
   'yooju.jung@teamsparta.co': [
     { date:'4/28',timeSlot:1,time:'12:37',title:'도둑도\n빈손으론 도망 안 칩니다.',location:'창의관' },
